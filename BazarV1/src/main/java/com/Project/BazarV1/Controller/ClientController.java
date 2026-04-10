@@ -36,14 +36,14 @@ public class ClientController {
         return ResponseEntity.created(URI.create("/api/v1/clients/" + newClientDTO.getId())).body(newClientDTO);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<ClientDTO> updateClient(@PathVariable Long idClient, @RequestBody ClientDTO clientDTO) {
         return ResponseEntity.ok(clientService.updateClient(idClient, clientDTO));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<ClientDTO> deleteClient(@PathVariable Long idClient) {
-        clientService.deleteClient(idClient);
+    public ResponseEntity<ClientDTO> deleteClient(@PathVariable Long idProduct) {
+        clientService.deleteClient(idProduct);
         return ResponseEntity.noContent().build();
     }
 
