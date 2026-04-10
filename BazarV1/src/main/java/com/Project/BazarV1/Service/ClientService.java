@@ -34,7 +34,7 @@ public class ClientService implements IClientService {
     }
 
     @Override
-    public ClientDTO editClient(Long id, ClientDTO clientDTO) {
+    public ClientDTO updateClient(Long id, ClientDTO clientDTO) {
         Client client = clientRepository.findById(id).orElseThrow( () -> new NotFoundException("Client not found"));
         client.setName(clientDTO.getName());
         client.setSurname(clientDTO.getSurname());
