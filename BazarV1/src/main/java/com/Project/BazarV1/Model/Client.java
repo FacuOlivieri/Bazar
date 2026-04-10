@@ -18,8 +18,8 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idClient;
-    private String nome;
+    private Long idClient;
+    private String name;
     private String surname;
     private String dni;
 
