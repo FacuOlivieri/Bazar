@@ -23,7 +23,7 @@ public class ClientService implements IClientService {
     public ClientDTO createClient(ClientDTO clientDTO) {
 
        Client newClient =  Client.builder()
-               .idClient(clientDTO.getId())
+               .idClient(clientDTO.getIdClientDTO())
                .name(clientDTO.getName())
                .surname(clientDTO.getSurname())
                .dni(clientDTO.getDni())

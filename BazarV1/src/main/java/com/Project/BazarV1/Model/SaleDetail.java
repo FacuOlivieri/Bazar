@@ -25,7 +25,7 @@ public class SaleDetail {
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "id_product")
     private Product product;
-    private Double quantity;
+    private Integer quantity;
     private Double total;
 
 }

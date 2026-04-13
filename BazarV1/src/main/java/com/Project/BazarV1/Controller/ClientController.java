@@ -33,7 +33,7 @@ public class ClientController {
     @PostMapping("/create")
     public ResponseEntity<ClientDTO> createClient(@RequestBody ClientDTO clientDTO) {
         ClientDTO newClientDTO = clientService.createClient(clientDTO);
-        return ResponseEntity.created(URI.create("/api/v1/clients/" + newClientDTO.getId())).body(newClientDTO);
+        return ResponseEntity.created(URI.create("/api/v1/clients/" + newClientDTO.getIdClientDTO())).body(newClientDTO);
     }
 
     @PutMapping("/{id}")
