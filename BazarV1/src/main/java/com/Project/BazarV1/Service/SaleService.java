@@ -1,6 +1,5 @@
 package com.Project.BazarV1.Service;
 
-import com.Project.BazarV1.DTO.ClientDTO;
 import com.Project.BazarV1.DTO.SaleDTO;
 import com.Project.BazarV1.DTO.SaleDetailDTO;
 import com.Project.BazarV1.Exception.NotFoundException;
@@ -22,11 +21,13 @@ public class SaleService implements ISaleService {
     private final ISaleRepository saleRepository;
     private final IClientRepository clientRepository;
     private final IProductRepository productRepository;
+    private final Calculator calculator;
 
-    public SaleService(ISaleRepository saleRepository,  IClientRepository clientRepository, IProductRepository productRepository) {
+    public SaleService(ISaleRepository saleRepository,  IClientRepository clientRepository, IProductRepository productRepository, Calculator calculator) {
         this.saleRepository = saleRepository;
         this.clientRepository = clientRepository;
         this.productRepository = productRepository;
+        this.calculator = calculator;
     }
 
     @Override
@@ -77,9 +78,40 @@ public class SaleService implements ISaleService {
     }
 
     @Override
-    public SaleDTO findSale(Long id, SaleDTO saleDTO) {
-        Sale sale = saleRepository.findById(id).orElseThrow(() -> new NotFoundException("Sale not found"));
-        return Mapper.toSaleDTO(sale);
+    public SaleDTO updateSale(Long id, SaleDTO saleDTO) {
+        Sale foundSale = saleRepository.findById(id).orElseThrow(() -> new NotFoundException("Sale not found"));
+        Client updatedClient = clientRepository.findById(saleDTO.getClient().getIdClientDTO()).orElseThrow(() -> new NotFoundException("Client not Found to add to the sale"));
+
+        List<SaleDetailDTO> productsDTOList = saleDTO.getProducts();
+        List<Product> productsToAsigne = new ArrayList<>();
+        List<SaleDetail> detailsListToAsigne = new ArrayList<>();
+
+        //Crea objeto Producto por cada producto pasado por el body de request, y lo pone en su lista
+        for (SaleDetailDTO saleDetailProducto : productsDTOList) {
+            Product product = productRepository.findProductByName(saleDetailProducto.getProductName());
+            productsToAsigne.add(product);
+        }
+
+        //De la lista de productos, creamos cada SaleDetail y agregamos a su correspondiente lista a asignar
+        for (Product product : productsToAsigne ) {
+            SaleDetail saleDetail = new SaleDetail();
+            saleDetail.setSale(foundSale);
+            saleDetail.setProduct(product);
+            saleDetail.setQuantity(product.getQuantity());
+            saleDetail.setTotal(product.getPrice() * product.getQuantity());
+            detailsListToAsigne.add(saleDetail);
+        }
+
+        //Asignamos al la venta a modificar los datos nuevos
+        foundSale.setDate(saleDTO.getDate());
+        foundSale.setClient(updatedClient);
+        foundSale.setProducts(detailsListToAsigne);
+        foundSale.setTotalPrice(calculator.calculateSaleTotalPrice(saleDTO));
+
+        //Persistimos y devolvemos
+        saleRepository.save(foundSale);
+        return Mapper.toSaleDTO(foundSale);
+
     }
 
     @Override

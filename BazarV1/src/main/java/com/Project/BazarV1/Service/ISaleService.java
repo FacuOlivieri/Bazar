@@ -8,7 +8,7 @@ public interface ISaleService {
 
 
     SaleDTO createSale(SaleDTO saleDTO);
-    SaleDTO findSale(Long id, SaleDTO saleDTO);
+    SaleDTO updateSale(Long id, SaleDTO saleDTO);
     List<SaleDTO> findAllSales();
     SaleDTO findSale(Long id);
     void deleteSale(Long id);
