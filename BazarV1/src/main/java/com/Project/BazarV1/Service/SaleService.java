@@ -19,19 +19,21 @@ import java.util.List;
 public class SaleService implements ISaleService {
 
 
-    private ISaleRepository saleRepository;
-    private IClientRepository clientRepository;
-    private IProductRepository productRepository;
+    private final ISaleRepository saleRepository;
+    private final IClientRepository clientRepository;
+    private final IProductRepository productRepository;
 
-    public SaleService(ISaleRepository saleRepository) {
+    public SaleService(ISaleRepository saleRepository,  IClientRepository clientRepository, IProductRepository productRepository) {
         this.saleRepository = saleRepository;
+        this.clientRepository = clientRepository;
+        this.productRepository = productRepository;
     }
 
     @Override
     public SaleDTO createSale(SaleDTO saleDTO) {
         //Para campo calculado
         Double totalSalePrice = 0.0D;
-       //Traemos CLiente para asignarlo a la nueva Venta
+       //Traemos Cliente para asignarlo a la nueva Venta
         Client clienteEncontrado = clientRepository.findById(saleDTO.getClient().getIdClientDTO()).
                 orElseThrow(() -> new NotFoundException("Client not Found to add to the sale"));
 
@@ -41,7 +43,7 @@ public class SaleService implements ISaleService {
         newSale.setId(saleDTO.getId());
         newSale.setDate(saleDTO.getDate());
         newSale.setClient(clienteEncontrado);
-        newSale.setTotalPrice(saleDTO.getTotalPrice());
+
 
         //Tramos lista de Productos pasado por el RequestBody
         List<SaleDetailDTO> listaDeProductosDTO = saleDTO.getProducts();
@@ -82,16 +84,22 @@ public class SaleService implements ISaleService {
 
     @Override
     public List<SaleDTO> findAllSales() {
-        return List.of();
+        List<Sale> sales = saleRepository.findAll();
+        List<SaleDTO> saleDTOs = new ArrayList<>();
+        for (Sale sale : sales) {
+            saleDTOs.add(Mapper.toSaleDTO(sale));
+        }
+        return saleDTOs;
     }
 
     @Override
     public SaleDTO findSale(Long id) {
-        return null;
+        return Mapper.toSaleDTO(saleRepository.findById(id).orElseThrow(() -> new NotFoundException("Sale not found")));
     }
 
     @Override
     public void deleteSale(Long id) {
-
+        Sale sale = saleRepository.findById(id).orElseThrow(() -> new NotFoundException("Sale not found"));
+        saleRepository.delete(sale);
     }
 }
