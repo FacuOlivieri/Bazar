@@ -2,7 +2,9 @@ package com.Project.BazarV1.Service;
 
 import com.Project.BazarV1.DTO.SaleDTO;
 import com.Project.BazarV1.DTO.SaleDetailDTO;
+import org.springframework.stereotype.Service;
 
+@Service
 public class Calculator implements ICalculator{
 
     @Override

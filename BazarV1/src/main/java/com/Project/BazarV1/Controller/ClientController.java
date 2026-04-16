@@ -37,13 +37,13 @@ public class ClientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ClientDTO> updateClient(@PathVariable Long idClient, @RequestBody ClientDTO clientDTO) {
-        return ResponseEntity.ok(clientService.updateClient(idClient, clientDTO));
+    public ResponseEntity<ClientDTO> updateClient(@PathVariable Long id, @RequestBody ClientDTO clientDTO) {
+        return ResponseEntity.ok(clientService.updateClient(id, clientDTO));
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<ClientDTO> deleteClient(@PathVariable Long idProduct) {
-        clientService.deleteClient(idProduct);
+    public ResponseEntity<ClientDTO> deleteClient(@PathVariable Long id) {
+        clientService.deleteClient(id);
         return ResponseEntity.noContent().build();
     }
 

@@ -5,13 +5,16 @@ import com.Project.BazarV1.Exception.NotFoundException;
 import com.Project.BazarV1.Mapper.Mapper;
 import com.Project.BazarV1.Model.Product;
 import com.Project.BazarV1.Repository.IProductRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ProductService implements IProductService{
 
     private final IProductRepository productRepository;
+    private final Integer LOW_STOCK_QUANTITY = 5;
 
     public ProductService(IProductRepository productRepository) {
         this.productRepository = productRepository;
@@ -27,6 +30,7 @@ public class ProductService implements IProductService{
                 .brand(productDTO.getBrand())
                 .quantity(productDTO.getQuantity())
                 .price(productDTO.getPrice())
+                .stock(productDTO.getStock())
                 .build();
 
         return Mapper.toProductDTO(productRepository.save(newProduct));
@@ -64,5 +68,16 @@ public class ProductService implements IProductService{
     public void deleteProduct(Long id) {
         Product product = productRepository.findById(id).orElseThrow(() -> new NotFoundException("Product not found"));
         productRepository.delete(product);
+    }
+
+    @Override
+    public List<ProductDTO> findAllLowStockProducts() {
+        List<Product> products = productRepository.findAll();
+        List<ProductDTO> productDTOsWithLowStock = new ArrayList<>();
+
+        products.stream()
+                .filter(product -> product.getStock() < LOW_STOCK_QUANTITY)
+                .forEach(product -> {productDTOsWithLowStock.add(Mapper.toProductDTO(product));});
+        return productDTOsWithLowStock;
     }
 }

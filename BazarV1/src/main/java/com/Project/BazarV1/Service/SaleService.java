@@ -11,10 +11,12 @@ import com.Project.BazarV1.Model.SaleDetail;
 import com.Project.BazarV1.Repository.IClientRepository;
 import com.Project.BazarV1.Repository.IProductRepository;
 import com.Project.BazarV1.Repository.ISaleRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class SaleService implements ISaleService {
 
 
@@ -46,7 +48,7 @@ public class SaleService implements ISaleService {
         newSale.setClient(clienteEncontrado);
 
 
-        //Tramos lista de Productos pasado por el RequestBody
+        //Traemos lista de Productos pasado por el RequestBody
         List<SaleDetailDTO> listaDeProductosDTO = saleDTO.getProducts();
         List<Product> listaDeProductosAAsignar = new ArrayList<>();
 

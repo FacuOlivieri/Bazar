@@ -25,6 +25,11 @@ public class ProductController {
         return ResponseEntity.ok(productService.findAllProducts());
     }
 
+    @GetMapping("/low_stock")
+    public ResponseEntity<List<ProductDTO>> getProductsWithLowStock() {
+        return ResponseEntity.ok(productService.findAllLowStockProducts());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
         return ResponseEntity.ok(productService.findProduct(id));
@@ -46,5 +51,8 @@ public class ProductController {
         productService.deleteProduct(idProduct);
         return ResponseEntity.noContent().build();
     }
+
+
+
 
 }
