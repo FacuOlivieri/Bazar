@@ -50,22 +50,17 @@ public class SaleService implements ISaleService {
 
         //Traemos lista de Productos pasado por el RequestBody
         List<SaleDetailDTO> listaDeProductosDTO = saleDTO.getProducts();
-        List<Product> listaDeProductosAAsignar = new ArrayList<>();
 
-        for (SaleDetailDTO producto : listaDeProductosDTO) {
-            Product product = productRepository.findProductByName(producto.getProductName());
-
-            listaDeProductosAAsignar.add(product);
-        }
-
-        //Lista de Productos Creadas a lista Detail
         List<SaleDetail> listaDetallesAAsignar = new ArrayList<>();
-        for (Product producto : listaDeProductosAAsignar) {
+
+        for (SaleDetailDTO productoDTO : listaDeProductosDTO) {
+            Product product = productRepository.findProductByName(productoDTO.getProductName());
+
             SaleDetail saleDetail = new SaleDetail();
             saleDetail.setSale(newSale);
-            saleDetail.setProduct(producto);
-            saleDetail.setQuantity(producto.getQuantity());
-            saleDetail.setTotal(producto.getPrice() * producto.getQuantity());
+            saleDetail.setProduct(product);
+            saleDetail.setQuantity(productoDTO.getQuantity());
+            saleDetail.setTotal(product.getPrice() * productoDTO.getQuantity());
             totalSalePrice += saleDetail.getTotal();
             listaDetallesAAsignar.add(saleDetail);
         }
@@ -85,22 +80,17 @@ public class SaleService implements ISaleService {
         Client updatedClient = clientRepository.findById(saleDTO.getClient().getIdClientDTO()).orElseThrow(() -> new NotFoundException("Client not Found to add to the sale"));
 
         List<SaleDetailDTO> productsDTOList = saleDTO.getProducts();
-        List<Product> productsToAsigne = new ArrayList<>();
         List<SaleDetail> detailsListToAsigne = new ArrayList<>();
 
-        //Crea objeto Producto por cada producto pasado por el body de request, y lo pone en su lista
+        //Crea objeto Producto por cada producto pasado por el body de request, creamos cada SaleDetail y agregamos a su correspondiente lista a asignar
         for (SaleDetailDTO saleDetailProducto : productsDTOList) {
             Product product = productRepository.findProductByName(saleDetailProducto.getProductName());
-            productsToAsigne.add(product);
-        }
 
-        //De la lista de productos, creamos cada SaleDetail y agregamos a su correspondiente lista a asignar
-        for (Product product : productsToAsigne ) {
             SaleDetail saleDetail = new SaleDetail();
             saleDetail.setSale(foundSale);
             saleDetail.setProduct(product);
-            saleDetail.setQuantity(product.getQuantity());
-            saleDetail.setTotal(product.getPrice() * product.getQuantity());
+            saleDetail.setQuantity(saleDetailProducto.getQuantity());
+            saleDetail.setTotal(product.getPrice() * saleDetailProducto.getQuantity());
             detailsListToAsigne.add(saleDetail);
         }
 
