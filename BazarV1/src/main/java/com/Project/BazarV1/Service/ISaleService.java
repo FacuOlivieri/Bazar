@@ -2,6 +2,8 @@ package com.Project.BazarV1.Service;
 
 import com.Project.BazarV1.DTO.SaleDTO;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ISaleService {
@@ -12,4 +14,6 @@ public interface ISaleService {
     List<SaleDTO> findAllSales();
     SaleDTO findSale(Long id);
     void deleteSale(Long id);
+    Integer saleQuantity(LocalDate date);
+    Double totalSalePriceAmount(LocalDate date);
 }

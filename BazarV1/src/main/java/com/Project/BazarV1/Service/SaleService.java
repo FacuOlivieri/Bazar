@@ -13,6 +13,8 @@ import com.Project.BazarV1.Repository.IProductRepository;
 import com.Project.BazarV1.Repository.ISaleRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +51,6 @@ public class SaleService implements ISaleService {
 
         //Traemos lista de Productos pasado por el RequestBody
         List<SaleDetailDTO> listaDeProductosDTO = saleDTO.getProducts();
-
         List<SaleDetail> listaDetallesAAsignar = new ArrayList<>();
 
         for (SaleDetailDTO productoDTO : listaDeProductosDTO) {
@@ -128,6 +129,17 @@ public class SaleService implements ISaleService {
         saleRepository.delete(sale);
     }
 
+    @Override
+    public Integer saleQuantity(LocalDate date) {
+        List<Sale> sales = saleRepository.findByDate(date);
+        return sales.size();
+    }
+
+    @Override
+    public Double totalSalePriceAmount(LocalDate date) {
+        List<Sale> sales = saleRepository.findByDate(date);
+        return sales.stream().mapToDouble(Sale::getTotalPrice).sum();
+    }
 
 
 }

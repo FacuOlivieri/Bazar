@@ -1,11 +1,14 @@
 package com.Project.BazarV1.Controller;
 
 import com.Project.BazarV1.DTO.SaleDTO;
+import com.Project.BazarV1.DTO.SaleSummaryByDateDTO;
 import com.Project.BazarV1.Service.SaleService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -28,6 +31,13 @@ public class SaleController {
     @GetMapping("{id}")
     public ResponseEntity<SaleDTO> getSaleById(@PathVariable Long id) {
         return ResponseEntity.ok(saleService.findSale(id));
+    }
+    @GetMapping("/{fecha_venta}")
+    public ResponseEntity<SaleSummaryByDateDTO> getSaleSummaryByDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha_venta) {
+        Integer quantity = saleService.saleQuantity(fecha_venta);
+        Double total = saleService.totalSalePriceAmount(fecha_venta);
+
+        return ResponseEntity.ok(new SaleSummaryByDateDTO(quantity, total));
     }
 
     @PostMapping("/create")
