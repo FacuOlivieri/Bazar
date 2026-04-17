@@ -5,20 +5,26 @@ import com.Project.BazarV1.Exception.InvalidProductException;
 import com.Project.BazarV1.Exception.NotFoundException;
 import com.Project.BazarV1.Mapper.Mapper;
 import com.Project.BazarV1.Model.Product;
+import com.Project.BazarV1.Model.Sale;
+import com.Project.BazarV1.Model.SaleDetail;
 import com.Project.BazarV1.Repository.IProductRepository;
+import com.Project.BazarV1.Repository.ISaleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService implements IProductService {
 
     private final IProductRepository productRepository;
+    private final ISaleRepository saleRepository;
     private final Integer LOW_STOCK_QUANTITY = 5;
 
-    public ProductService(IProductRepository productRepository) {
+    public ProductService(IProductRepository productRepository, ISaleRepository saleRepository) {
         this.productRepository = productRepository;
+        this.saleRepository = saleRepository;
     }
 
     @Override
@@ -73,6 +79,7 @@ public class ProductService implements IProductService {
         product.setBrand(productDTO.getBrand());
         product.setQuantity(productDTO.getQuantity());
         product.setPrice(productDTO.getPrice());
+        product.setStock(productDTO.getStock());
 
         return Mapper.toProductDTO(productRepository.save(product));
     }
@@ -119,5 +126,26 @@ public class ProductService implements IProductService {
                 .forEach(product -> productDTOsWithLowStock.add(Mapper.toProductDTO(product)));
 
         return productDTOsWithLowStock;
+    }
+
+    @Override
+    public List<ProductDTO> findProductsFromSpecificSale(Long idSale) {
+        Sale specificSale = saleRepository.findById(idSale).orElseThrow(() -> new NotFoundException("Sale not found"));
+        List<SaleDetail> detailProducts = specificSale.getProducts();
+        List<Product> products = new ArrayList<>();
+
+        //Por cada detalle lo metemos en una lista de Productos
+        for (SaleDetail detailProduct : detailProducts) {
+            Optional<Product> foundProduct = productRepository.findById(detailProduct.getProduct().getIdProduct());
+            foundProduct.ifPresent(products::add);
+        }
+
+        //Agregamos cada producto a Lista DTO
+        List<ProductDTO> productDTOs = new ArrayList<>();
+        for (Product product : products) {
+            productDTOs.add(Mapper.toProductDTO(product));
+        }
+        return productDTOs;
+
     }
 }

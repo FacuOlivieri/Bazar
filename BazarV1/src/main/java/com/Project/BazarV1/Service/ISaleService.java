@@ -12,5 +12,4 @@ public interface ISaleService {
     List<SaleDTO> findAllSales();
     SaleDTO findSale(Long id);
     void deleteSale(Long id);
-
 }

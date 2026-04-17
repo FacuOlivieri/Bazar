@@ -24,7 +24,7 @@ public class Sale {
     @OneToMany (mappedBy = "sale", cascade = CascadeType.ALL, orphanRemoval = true , fetch = FetchType.EAGER)
     private List<SaleDetail> products;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_client", referencedColumnName = "idClient")
     private Client client;
 

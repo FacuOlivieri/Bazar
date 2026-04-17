@@ -43,7 +43,6 @@ public class SaleService implements ISaleService {
 
         //Creamos Venta
         Sale newSale = new Sale();
-        newSale.setId(saleDTO.getId());
         newSale.setDate(saleDTO.getDate());
         newSale.setClient(clienteEncontrado);
 
@@ -54,7 +53,8 @@ public class SaleService implements ISaleService {
         List<SaleDetail> listaDetallesAAsignar = new ArrayList<>();
 
         for (SaleDetailDTO productoDTO : listaDeProductosDTO) {
-            Product product = productRepository.findProductByName(productoDTO.getProductName());
+            Product product = productRepository.findById(productoDTO.getId())
+                    .orElseThrow(() -> new NotFoundException("Product not Found to add to the sale"));
 
             SaleDetail saleDetail = new SaleDetail();
             saleDetail.setSale(newSale);
@@ -84,7 +84,8 @@ public class SaleService implements ISaleService {
 
         //Crea objeto Producto por cada producto pasado por el body de request, creamos cada SaleDetail y agregamos a su correspondiente lista a asignar
         for (SaleDetailDTO saleDetailProducto : productsDTOList) {
-            Product product = productRepository.findProductByName(saleDetailProducto.getProductName());
+            Product product = productRepository.findProductByName(saleDetailProducto.getProductName())
+                    .orElseThrow(() -> new NotFoundException("Producto not found: " + saleDetailProducto.getProductName()));
 
             SaleDetail saleDetail = new SaleDetail();
             saleDetail.setSale(foundSale);
@@ -126,4 +127,7 @@ public class SaleService implements ISaleService {
         Sale sale = saleRepository.findById(id).orElseThrow(() -> new NotFoundException("Sale not found"));
         saleRepository.delete(sale);
     }
+
+
+
 }

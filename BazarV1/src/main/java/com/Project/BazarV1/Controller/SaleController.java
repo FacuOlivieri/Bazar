@@ -17,6 +17,9 @@ public class SaleController {
         this.saleService = saleService;
     }
 
+
+
+
     @GetMapping
     public ResponseEntity<List<SaleDTO>> getAllSales() {
         return ResponseEntity.ok(saleService.findAllSales());
