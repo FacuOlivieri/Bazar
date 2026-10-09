@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes | Bazar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<header class="navbar">
+    <a href="/" class="brand">
+        <span class="brand-mark">B</span>
+        <span class="brand-name">Bazar</span>
+    </a>
+    <nav class="nav-links">
+        <a href="/clientes" class="active">Clientes</a>
+        <a href="/productos">Productos</a>
+        <a href="/ventas">Ventas</a>
+    </nav>
+</header>
+
+<main class="container">
+
+    <section class="page-header">
+        <div>
+            <h1>Clientes</h1>
+            <p class="subtitle">Administrá los clientes registrados en el bazar</p>
+        </div>
+        <a href="/clientes/nuevo" class="btn btn-primary">+ Nuevo cliente</a>
+    </section>
+
+    <section class="stats">
+        <div class="stat-card">
+            <span class="stat-label">Total de clientes</span>
+            <span class="stat-value">3</span>
+        </div>
+    </section>
+
+    <section class="card">
+        <div class="card-toolbar">
+            <input type="search" class="search" placeholder="Buscar por nombre, apellido o DNI...">
+        </div>
+
+        <div class="table-wrapper">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>DNI</th>
+                    <th class="actions-col">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><span class="badge">#1</span></td>
+                    <td>Juan</td>
+                    <td>Pérez</td>
+                    <td>30123456</td>
+                    <td class="actions-col">
+                        <a href="#" class="btn btn-ghost btn-sm">Editar</a>
+                        <a href="#" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="badge">#2</span></td>
+                    <td>María</td>
+                    <td>González</td>
+                    <td>28987654</td>
+                    <td class="actions-col">
+                        <a href="#" class="btn btn-ghost btn-sm">Editar</a>
+                        <a href="#" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td><span class="badge">#3</span></td>
+                    <td>Lucas</td>
+                    <td>Fernández</td>
+                    <td>35456789</td>
+                    <td class="actions-col">
+                        <a href="#" class="btn btn-ghost btn-sm">Editar</a>
+                        <a href="#" class="btn btn-danger btn-sm">Eliminar</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="empty-state" hidden>
+            <p>No hay clientes registrados todavía.</p>
+        </div>
+    </section>
+
+</main>
+
+<footer class="footer">
+    <p>© 2026 Bazar</p>
+</footer>
+
+</body>
+</html>
