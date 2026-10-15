@@ -1,5 +1,6 @@
 package com.Project.BazarV1.DTO;
 
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +16,8 @@ public class ProductDTO {
     private String name;
     private String brand;
     private Integer quantity;
+    @Positive
     private Double price;
-    private Double stock;
+    @Positive
+    private Integer stock;
 }

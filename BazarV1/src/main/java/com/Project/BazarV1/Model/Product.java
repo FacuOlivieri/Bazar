@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,8 +23,12 @@ public class Product {
     private String name;
     private String brand;
     private Double price;
+
+    @Positive
     private Integer quantity;
-    private Double stock;
+
+    @Positive
+    private Integer stock;
 
 
 }
