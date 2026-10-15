@@ -23,11 +23,8 @@ public class Product {
     private String name;
     private String brand;
     private Double price;
-
     @Positive
     private Integer quantity;
-
-    @Positive
     private Integer stock;
 
 

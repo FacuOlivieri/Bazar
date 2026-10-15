@@ -85,9 +85,8 @@ public class SaleService implements ISaleService {
     private void validacionStockProductos(List<SaleDetailDTO> listaDeProductosDTO) {
         for (SaleDetailDTO productoPasado : listaDeProductosDTO) {
             Optional<Product> productoEnStock = productRepository.findById(productoPasado.getId());
-            if (productoEnStock.isPresent() && productoPasado.getQuantity() > productoEnStock.get().getQuantity()) {
-                throw new NotEnoughStock("La cantidad de " + productoPasado.getProductName() +
-                        " no puede ser menor que el stock presente. STOCK PRESENTE = " + productoPasado.getQuantity());
+            if (productoEnStock.isPresent() && productoPasado.getQuantity() > productoEnStock.get().getStock()) {
+                throw new NotEnoughStock("La cantidad no puede ser menor que el stock presente. STOCK PRESENTE = " + productoPasado.getQuantity());
             }
         }
     }

@@ -18,6 +18,6 @@ public class ProductDTO {
     private Integer quantity;
     @Positive
     private Double price;
-    @Positive
+
     private Integer stock;
 }
