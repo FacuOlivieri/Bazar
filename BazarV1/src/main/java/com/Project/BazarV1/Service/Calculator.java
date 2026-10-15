@@ -11,7 +11,7 @@ public class Calculator implements ICalculator{
     public Double calculateSaleTotalPrice(SaleDTO saleDTO) {
         double totalPrice = 0.0;
         for (SaleDetailDTO saleDetailProduct : saleDTO.getProducts()) {
-            totalPrice += saleDetailProduct.getSubtotal() * saleDetailProduct.getQuantity();
+            totalPrice += saleDetailProduct.getSubtotal();
         }
         return totalPrice;
     }

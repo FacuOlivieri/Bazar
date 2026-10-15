@@ -32,7 +32,7 @@ public class SaleController {
     public ResponseEntity<SaleDTO> getSaleById(@PathVariable Long id) {
         return ResponseEntity.ok(saleService.findSale(id));
     }
-    @GetMapping("/{fecha_venta}")
+    @GetMapping("/summary/{fecha_venta}")
     public ResponseEntity<SaleSummaryByDateDTO> getSaleSummaryByDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha_venta) {
         Integer quantity = saleService.saleQuantity(fecha_venta);
         Double total = saleService.totalSalePriceAmount(fecha_venta);

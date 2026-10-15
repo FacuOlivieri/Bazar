@@ -2,6 +2,7 @@ package com.Project.BazarV1.Service;
 
 import com.Project.BazarV1.DTO.SaleDTO;
 import com.Project.BazarV1.DTO.SaleDetailDTO;
+import com.Project.BazarV1.Exception.NotEnoughStock;
 import com.Project.BazarV1.Exception.NotFoundException;
 import com.Project.BazarV1.Mapper.Mapper;
 import com.Project.BazarV1.Model.Client;
@@ -17,6 +18,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SaleService implements ISaleService {
@@ -36,6 +38,11 @@ public class SaleService implements ISaleService {
 
     @Override
     public SaleDTO createSale(SaleDTO saleDTO) {
+
+        //Lista de productos pasados -- Verificacion de Stock
+        List<SaleDetailDTO> listaDeProductosDTO = saleDTO.getProducts();
+        validacionStockProductos(listaDeProductosDTO);
+
         //Para campo calculado
         Double totalSalePrice = 0.0D;
        //Traemos Cliente para asignarlo a la nueva Venta
@@ -49,17 +56,17 @@ public class SaleService implements ISaleService {
         newSale.setClient(clienteEncontrado);
 
 
-        //Traemos lista de Productos pasado por el RequestBody
-        List<SaleDetailDTO> listaDeProductosDTO = saleDTO.getProducts();
+        //Asignamos Detalles segun lo pasado
         List<SaleDetail> listaDetallesAAsignar = new ArrayList<>();
 
         for (SaleDetailDTO productoDTO : listaDeProductosDTO) {
-            Product product = productRepository.findById(productoDTO.getId())
-                    .orElseThrow(() -> new NotFoundException("Product not Found to add to the sale"));
+            Product product = productRepository.findById(productoDTO.getId()).orElseThrow(() -> new NotFoundException("Product not Found to add to sale"));
+            product.setStock(product.getStock() - productoDTO.getQuantity());
 
             SaleDetail saleDetail = new SaleDetail();
             saleDetail.setSale(newSale);
             saleDetail.setProduct(product);
+
             saleDetail.setQuantity(productoDTO.getQuantity());
             saleDetail.setTotal(product.getPrice() * productoDTO.getQuantity());
             totalSalePrice += saleDetail.getTotal();
@@ -75,6 +82,16 @@ public class SaleService implements ISaleService {
         return Mapper.toSaleDTO(newSale);
     }
 
+    private void validacionStockProductos(List<SaleDetailDTO> listaDeProductosDTO) {
+        for (SaleDetailDTO productoPasado : listaDeProductosDTO) {
+            Optional<Product> productoEnStock = productRepository.findById(productoPasado.getId());
+            if (productoEnStock.isPresent() && productoPasado.getQuantity() > productoEnStock.get().getQuantity()) {
+                throw new NotEnoughStock("La cantidad de " + productoPasado.getProductName() +
+                        " no puede ser menor que el stock presente. STOCK PRESENTE = " + productoPasado.getQuantity());
+            }
+        }
+    }
+
     @Override
     public SaleDTO updateSale(Long id, SaleDTO saleDTO) {
         Sale foundSale = saleRepository.findById(id).orElseThrow(() -> new NotFoundException("Sale not found"));
@@ -85,7 +102,7 @@ public class SaleService implements ISaleService {
 
         //Crea objeto Producto por cada producto pasado por el body de request, creamos cada SaleDetail y agregamos a su correspondiente lista a asignar
         for (SaleDetailDTO saleDetailProducto : productsDTOList) {
-            Product product = productRepository.findProductByName(saleDetailProducto.getProductName())
+            Product product = productRepository.findById(saleDetailProducto.getId())
                     .orElseThrow(() -> new NotFoundException("Producto not found: " + saleDetailProducto.getProductName()));
 
             SaleDetail saleDetail = new SaleDetail();
