@@ -27,6 +27,7 @@ public class ClientService implements IClientService {
                .name(clientDTO.getName())
                .surname(clientDTO.getSurname())
                .phone(clientDTO.getPhone())
+               .adress(clientDTO.getAdress())
                .email(clientDTO.getEmail())
                .dni(clientDTO.getDni())
                .build();
@@ -41,7 +42,9 @@ public class ClientService implements IClientService {
         client.setName(clientDTO.getName());
         client.setSurname(clientDTO.getSurname());
         client.setDni(clientDTO.getDni());
-
+        client.setPhone(clientDTO.getPhone());
+        client.setEmail(clientDTO.getEmail());
+        client.setAdress(clientDTO.getAdress());
 
 
         return Mapper.toClientDTO(clientRepository.save(client));

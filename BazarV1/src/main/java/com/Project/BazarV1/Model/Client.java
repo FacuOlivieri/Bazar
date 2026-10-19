@@ -24,7 +24,7 @@ public class Client {
     private String dni;
     private String adress;
     private String email;
-    private Integer phone;
+    private String phone;
 
 
 
