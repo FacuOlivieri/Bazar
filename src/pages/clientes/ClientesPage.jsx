@@ -29,7 +29,7 @@ function describeClientError(error, kind) {
 }
 
 function emptyCopyFor(query) {
-  if (query.trim()) return { title: `Nada coincide con «${query}»`, hint: 'Probá con el apellido o el DNI.' };
+  if (query.trim()) return { title: `Nada coincide con «${query}»`, hint: 'Probá con el apellido, el DNI, el teléfono o el email.' };
   return { title: 'Todavía no hay clientes', hint: 'Cargá el primero con «Nuevo cliente».' };
 }
 
@@ -43,7 +43,7 @@ function IdlePanel({ onCreate }) {
   return (
     <div className="side-column__body clients-idle">
       <p className="helper-text">
-        Tocá «Editar» en la lista para cambiar el nombre o el DNI de un cliente. «Eliminar» está al lado y pide confirmación.
+        Tocá «Editar» en la lista para cambiar los datos de un cliente: nombre, DNI, teléfono, email o dirección. «Eliminar» está al lado y pide confirmación.
       </p>
       <button type="button" className="btn btn--ghost" onClick={onCreate}>
         <Icon name="plus" size={14} strokeWidth={2.6} />
@@ -90,8 +90,8 @@ export function ClientesPage() {
           <SearchField
             id="filtrar-clientes"
             variant="inline"
-            label="Filtrar por nombre, apellido o DNI"
-            placeholder="Filtrar por nombre, apellido o DNI…"
+            label="Filtrar por nombre, DNI, teléfono o email"
+            placeholder="Nombre, DNI, teléfono o email…"
             value={query}
             onChange={setQuery}
           />

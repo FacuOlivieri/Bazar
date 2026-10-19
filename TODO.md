@@ -13,14 +13,26 @@ Lista viva para ir mejorando las dos partes de a poco. El diseño actual usa **s
 - [x] `stock` pasó de `Double` a `Integer`.
 
 ### Revisar en los arreglos nuevos (leído en el código, no probado)
-- [ ] **Vender la última unidad falla:** `Product.stock` tiene `@Positive`, y con `spring-boot-starter-validation` Hibernate valida al guardar. Al dejar el stock en 0, salta una `ConstraintViolationException`. Además, no se podría crear un producto con stock 0. Usar `@PositiveOrZero` en `stock` (entidad y DTO).
-- [ ] **La validación de stock compara contra el campo equivocado:** `validacionStockProductos` usa `getQuantity()` del producto en vez de `getStock()`. Hoy, con `quantity = 1`, no deja vender más de 1 unidad aunque haya 24.
+- [x] **Vender la última unidad falla:** `Product.stock` tiene `@Positive`, y con `spring-boot-starter-validation` Hibernate valida al guardar. Al dejar el stock en 0, salta una `ConstraintViolationException`. Además, no se podría crear un producto con stock 0. Usar `@PositiveOrZero` en `stock` (entidad y DTO).
+- [x] **La validación de stock compara contra el campo equivocado:** `validacionStockProductos` usa `getQuantity()` del producto en vez de `getStock()`. Hoy, con `quantity = 1`, no deja vender más de 1 unidad aunque haya 24.
 - [ ] El mensaje de `NotEnoughStock` muestra la cantidad pedida como «STOCK PRESENTE», y `productName` llega `null` porque el front manda solo `{ id, quantity }`. Propuesta: «No hay stock suficiente de Balde plástico 10 L: pediste 3, quedan 2» (con el nombre sacado del producto de la base).
-- [ ] El descuento de stock se guarda solo porque Open Session In View mantiene la entidad gestionada. Conviene `@Transactional` en `createSale` (y `productRepository.save` explícito si hace falta), para que la venta y el stock se guarden o fallen juntos.
+- [x] (Ya tiene `@Transactional`.) El descuento de stock se guardaba solo porque Open Session In View mantiene la entidad gestionada. Conviene `@Transactional` en `createSale` (y `productRepository.save` explícito si hace falta), para que la venta y el stock se guarden o fallen juntos.
 - [ ] `updateSale` no devuelve el stock de la venta anterior ni descuenta el de la nueva.
 - [ ] El mismo producto repetido en dos líneas de la venta saltea la validación (se valida línea por línea).
 - [ ] `@Positive` en `ProductDTO` no se aplica sin `@Valid` en el controller.
 - [ ] `ProductDTO.quantity`: definir qué significa (¿unidades por pack?). El front no lo muestra y lo deja como viene.
+
+### Cupones y datos del cliente (probado con el front, back en H2)
+- [x] `createClient` ahora guarda la dirección.
+- [x] `updateClient` ahora actualiza teléfono, email y dirección.
+- [x] El teléfono pasó a `String` (el front lo manda como texto, solo dígitos).
+- [x] Validación de teléfono: `ClientService.validatePhone` acepta dígitos, un `+` adelante y separadores (espacios, guiones, paréntesis, puntos), guarda solo dígitos y rechaza letras con 400 (`InvalidClientException`). El front descarta las letras al escribir y avisa debajo del campo.
+- [ ] **La columna `client.phone` de MySQL sigue siendo `int(11)`:** `ddl-auto=update` no cambia el tipo de columnas existentes. Hay que correr una vez, en la base `bazarV1`: `ALTER TABLE client MODIFY phone VARCHAR(255);` Si no, los teléfonos largos o con 0 adelante fallan o se cortan en la base real (en H2 funciona porque la tabla se crea de cero).
+- [ ] Los archivos de cupones del back (`CouponController`, `CouponDTO`, `CouponService`, `ICouponService`, `ICouponRepository`, `InvalidCouponException`) no están agregados a git: los commits los mencionan, pero no los incluyen.
+- [ ] El campo se llama `adress` (falta una d). El front lo traduce en `domain/client.js`; si se renombra a `address`, se cambia solo ahí.
+- [ ] `NotFoundException` e `InvalidCouponException` responden 500. Con el `@ControllerAdvice` deberían ser 404 y 409.
+- [ ] El identificador del cupón distingue mayúsculas y espacios en el back. El front siempre crea códigos en mayúsculas y sin espacios, y busca ignorando ambos; conviene normalizar también en `CouponService`.
+- [ ] Al borrar una venta con cupón, el cupón queda marcado como usado. Decidir si se libera.
 
 ### Validaciones (fuera del diseño por ahora)
 - [ ] Pasar validaciones a Bean Validation (`@Valid`, `@NotBlank`, `@Positive`) en los DTOs.
@@ -40,7 +52,7 @@ Lista viva para ir mejorando las dos partes de a poco. El diseño actual usa **s
 - [ ] Renombrar `ClientDTO.idClientDTO` → `id`.
 - [ ] Borrar un cliente con ventas responde 500 (`DataIntegrityViolationException` por la clave foránea). Devolver 409 con un mensaje claro, o desactivar el cliente en lugar de borrarlo. Hoy el front lo traduce a «tiene ventas registradas».
 - [ ] Validar DNI en el back (obligatorio, solo números, sin repetidos).
-- [ ] Base persistente (hoy H2 en memoria: se pierde todo al reiniciar).
+- [x] Base persistente: MySQL (XAMPP). H2 queda comentado en `application.properties`.
 
 ## Front (React + Vite)
 
@@ -57,7 +69,12 @@ Lista viva para ir mejorando las dos partes de a poco. El diseño actual usa **s
 - [ ] Validación de formularios de producto (obligatorios, precio > 0, sin negativos) y mostrar los errores que devuelva la API.
 - [ ] Estados de carga (skeletons) y de error de red en tablas y ticket.
 - [ ] Revalidar stock al cobrar: si el back responde `NotEnoughStock`, avisar en el ticket sobre la línea afectada.
-- [ ] Usar `GET /api/v1/sales/summary/{fecha}` para el resumen del día del riel.
+- [x] Resumen del día del riel con `GET /api/v1/sales/summary/{fecha}`.
+
+### Cupones y clientes (hecho)
+- [x] Pantalla Cupones (F6): disponibles / usados / todos, alta, edición (incluye marcar como usado) y borrado.
+- [x] Cupón opcional en el ticket: se valida contra `/coupons/unused`, muestra subtotal, descuento y total con el mismo redondeo que el back.
+- [x] Clientes: teléfono, email y dirección en el formulario; teléfono y email en la tabla; búsqueda también por teléfono y email.
 
 ### Próximas pantallas
 - [x] Clientes (CRUD sobre `/api/v1/clients`), atajo F4.

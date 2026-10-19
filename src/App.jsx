@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { ClientesPage } from './pages/clientes/ClientesPage';
+import { CuponesPage } from './pages/cupones/CuponesPage';
 import { MostradorPage } from './pages/mostrador/MostradorPage';
 import { ProductosPage } from './pages/productos/ProductosPage';
 
@@ -10,7 +11,8 @@ export function App() {
   useKeyboardShortcuts({
     F1: () => navigate('/mostrador'),
     F3: () => navigate('/productos'),
-    F4: () => navigate('/clientes')
+    F4: () => navigate('/clientes'),
+    F6: () => navigate('/cupones')
   });
 
   return (
@@ -18,6 +20,7 @@ export function App() {
       <Route path="/mostrador" element={<MostradorPage />} />
       <Route path="/productos" element={<ProductosPage />} />
       <Route path="/clientes" element={<ClientesPage />} />
+      <Route path="/cupones" element={<CuponesPage />} />
       <Route path="*" element={<Navigate to="/mostrador" replace />} />
     </Routes>
   );

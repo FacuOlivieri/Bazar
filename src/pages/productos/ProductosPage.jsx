@@ -4,6 +4,7 @@ import { InlineError, Notice } from '../../components/ui/Feedback';
 import { Icon } from '../../components/ui/Icon';
 import { PanelHeader } from '../../components/ui/PanelHeader';
 import { SearchField } from '../../components/ui/SearchField';
+import { Tabs } from '../../components/ui/Tabs';
 import { formatNumber, pluralize } from '../../domain/format';
 import { matchesProduct } from '../../domain/product';
 import { isLowStock, LOW_STOCK_QUANTITY } from '../../domain/stock';
@@ -37,25 +38,6 @@ function panelHeaderFor(panel) {
   if (panel.mode === PANEL_MODE.CREATE) return { title: 'Nuevo producto', subtitle: 'Se guarda en el catálogo del local' };
   if (panel.mode === PANEL_MODE.EDIT) return { title: `Producto N.º ${formatNumber(panel.editing.idProduct)}`, subtitle: 'Editando precio y stock' };
   return { title: 'Pedido al proveedor', subtitle: 'Lo que hay que reponer, por marca' };
-}
-
-function ProductTabs({ activeKey, counts, onSelect }) {
-  return (
-    <div role="tablist" aria-label="Vista de productos" className="tabs">
-      {TABS.map((tab) => (
-        <button
-          key={tab.key}
-          type="button"
-          role="tab"
-          aria-selected={tab.key === activeKey}
-          className={tab.key === activeKey ? 'tab is-on' : 'tab'}
-          onClick={() => onSelect(tab.key)}
-        >
-          {tab.label} ({counts[tab.key]})
-        </button>
-      ))}
-    </div>
-  );
 }
 
 export function ProductosPage() {
@@ -96,7 +78,9 @@ export function ProductosPage() {
         </div>
 
         <div className="tabs-row">
-          <ProductTabs
+          <Tabs
+            label="Vista de productos"
+            tabs={TABS}
             activeKey={tabKey}
             counts={{ all: catalog.products.length, low: lowStockProducts.length }}
             onSelect={setTabKey}

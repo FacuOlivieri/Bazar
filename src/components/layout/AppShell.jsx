@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom';
 const NAV_ITEMS = [
   { to: '/mostrador', label: 'Mostrador', shortcut: 'F1' },
   { to: '/productos', label: 'Productos', shortcut: 'F3' },
-  { to: '/clientes', label: 'Clientes', shortcut: 'F4' }
+  { to: '/clientes', label: 'Clientes', shortcut: 'F4' },
+  { to: '/cupones', label: 'Cupones', shortcut: 'F6' }
 ];
 
 function navLinkClass({ isActive }) {

@@ -1,16 +1,36 @@
 import { Icon } from '../../components/ui/Icon';
 import { EmptyState, InlineError, Notice } from '../../components/ui/Feedback';
 import { PanelHeader } from '../../components/ui/PanelHeader';
+import { formatDiscount } from '../../domain/coupon';
 import { formatNumber, formatPrice, formatToday, pluralize } from '../../domain/format';
 import { ClientPicker } from './ClientPicker';
+import { CouponField } from './CouponField';
 import { TicketLine } from './TicketLine';
 
-function TicketFooter({ total, needsClient, canCharge, isCharging, onCharge, onGoToClient }) {
+function TotalBreakdown({ subtotal, coupon, discount }) {
+  return (
+    <dl className="ticket-footer__breakdown num">
+      <div>
+        <dt>Subtotal</dt>
+        <dd>{formatPrice(subtotal)}</dd>
+      </div>
+      <div>
+        <dt>
+          Cupón {coupon.identifier} ({formatDiscount(coupon.discount)})
+        </dt>
+        <dd>−{formatPrice(discount)}</dd>
+      </div>
+    </dl>
+  );
+}
+
+function TicketFooter({ totals, coupon, needsClient, canCharge, isCharging, onCharge, onGoToClient }) {
   return (
     <div className="ticket-footer">
+      {coupon && totals.discount > 0 && <TotalBreakdown subtotal={totals.subtotal} coupon={coupon} discount={totals.discount} />}
       <div className="ticket-footer__total">
         <span className="ticket-footer__label">Total</span>
-        <b className="ticket-footer__amount">{formatPrice(total)}</b>
+        <b className="ticket-footer__amount">{formatPrice(totals.total)}</b>
       </div>
       {needsClient && (
         <button type="button" className="link-btn link-btn--sentence" onClick={onGoToClient}>
@@ -24,7 +44,16 @@ function TicketFooter({ total, needsClient, canCharge, isCharging, onCharge, onG
   );
 }
 
-export function Ticket({ ticket, productsById, clientPicker, lastSale, chargeError, isCharging, canCharge, onCharge }) {
+function LastSaleNotice({ sale }) {
+  return (
+    <Notice className="ticket__notice">
+      Venta N.º {formatNumber(sale.id)} registrada · <b className="num">{formatPrice(sale.totalPrice)}</b> · {sale.clientName}
+      {sale.couponIdentifier && ` · cupón ${sale.couponIdentifier} (−${formatDiscount(sale.couponDiscount)})`}
+    </Notice>
+  );
+}
+
+export function Ticket({ ticket, totals, productsById, clientPicker, couponField, lastSale, chargeError, isCharging, canCharge, onCharge }) {
   const needsClient = !ticket.isEmpty && !clientPicker.selectedClient;
 
   return (
@@ -34,11 +63,7 @@ export function Ticket({ ticket, productsById, clientPicker, lastSale, chargeErr
         subtitle={`${formatToday()} · ${pluralize(ticket.lines.length, 'artículo', 'artículos')} · ${pluralize(ticket.units, 'unidad', 'unidades')}`}
       />
 
-      {lastSale && (
-        <Notice className="ticket__notice">
-          Venta N.º {formatNumber(lastSale.id)} registrada · <b className="num">{formatPrice(lastSale.totalPrice)}</b> · {lastSale.clientName}
-        </Notice>
-      )}
+      {lastSale && <LastSaleNotice sale={lastSale} />}
 
       <div className="side-column__body ticket__client">
         <ClientPicker {...clientPicker} />
@@ -63,8 +88,15 @@ export function Ticket({ ticket, productsById, clientPicker, lastSale, chargeErr
         {chargeError && <InlineError>{chargeError}</InlineError>}
       </div>
 
+      {!ticket.isEmpty && (
+        <div className="side-column__body ticket__coupon">
+          <CouponField {...couponField} />
+        </div>
+      )}
+
       <TicketFooter
-        total={ticket.total}
+        totals={totals}
+        coupon={couponField.appliedCoupon}
         needsClient={needsClient}
         canCharge={canCharge}
         isCharging={isCharging}

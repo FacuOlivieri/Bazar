@@ -246,3 +246,84 @@
     margin: 0 0 6px auto;
   }
 }
+
+/* ---------- Coupon ---------- */
+.ticket__coupon {
+  padding-top: 14px;
+  padding-bottom: 14px;
+  border-top: var(--rule-dashed);
+}
+
+.coupon-field__optional {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 600;
+}
+
+.coupon-field__row {
+  display: flex;
+  gap: 8px;
+}
+
+.coupon-field__row .input {
+  flex: 1;
+  min-width: 0;
+}
+
+.coupon-field__error {
+  margin-top: 8px;
+}
+
+/* Applied coupon reads like a torn-off voucher stub: dashed ink edge on carton tint. */
+.coupon-stub {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  min-height: var(--touch-target);
+  padding: 6px 4px 6px 12px;
+  background: var(--color-carton-tint);
+  border: 2px dashed var(--color-ink);
+}
+
+.coupon-stub__label {
+  font: 700 13px var(--font-condensed);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.coupon-stub__discount {
+  font: 700 17px var(--font-condensed);
+}
+
+.coupon-stub__remove {
+  margin-left: auto;
+}
+
+.ticket-footer__breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-ink-muted);
+}
+
+.ticket-footer__breakdown div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ticket-footer__breakdown dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+@media (max-width: 800px) {
+  .shell:has(.ticket-footer__breakdown) {
+    padding-bottom: 210px;
+  }
+}

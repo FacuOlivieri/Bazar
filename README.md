@@ -19,6 +19,8 @@ Panel interno del bazar (mostrador y stock), hecho con React + Vite. Consume la 
 
 3. Abrir http://localhost:5173.
 
+El back usa MySQL (XAMPP, base `bazarV1`). Para probar sin tocar esa base, en el Code tab de Claude está la configuración `backend-h2`, que lo levanta con H2 en memoria mediante variables de entorno, sin cambiar `application.properties`.
+
 En desarrollo, Vite reenvía todo `/api` al back (`vite.config.js`), así que no hace falta configurar CORS. Si el back corre en otro lugar: `BACKEND_URL=http://otra-url:8080 npm run dev`.
 
 ## Atajos
@@ -28,17 +30,21 @@ En desarrollo, Vite reenvía todo `/api` al back (`vite.config.js`), así que no
 | F1 | Mostrador |
 | F2 | Buscar producto |
 | F3 | Productos |
+| F4 | Clientes |
+| F6 | Cupones |
 | F12 | Cobrar |
+
+(F5 queda libre porque recarga la página.)
 
 ## Estructura
 
 ```
 src/
-  api/          un archivo por recurso del back (productsApi, clientsApi, salesApi) + httpClient
-  domain/       funciones puras de negocio: formato, stock, búsqueda, armado de la venta
-  hooks/        estado y carga de datos (useProducts, useTicket, useClients, ...)
-  components/   layout (AppShell) y piezas de UI compartidas (sello de stock, buscador, avisos)
-  pages/        mostrador/ y productos/: cada pantalla con sus componentes y su CSS
+  api/          un archivo por recurso del back (products, clients, sales, coupons) + httpClient
+  domain/       funciones puras de negocio: formato, stock, búsqueda, cupones, armado de la venta
+  hooks/        estado y carga de datos (useProducts, useTicket, useClients, useCoupons, ...)
+  components/   layout (AppShell) y piezas de UI compartidas (sello de stock, buscador, pestañas, avisos)
+  pages/        mostrador/, productos/, clientes/ y cupones/: cada pantalla con sus componentes y su CSS
   styles/       tokens del DESIGN.md, base y componentes
 ```
 

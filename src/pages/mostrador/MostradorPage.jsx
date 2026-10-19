@@ -1,9 +1,11 @@
 import { useCallback, useRef, useState } from 'react';
 import { AppShell } from '../../components/layout/AppShell';
 import { SearchField } from '../../components/ui/SearchField';
+import { applyDiscount } from '../../domain/coupon';
 import { formatPrice, formatToday, pluralize } from '../../domain/format';
 import { matchesProduct } from '../../domain/product';
 import { useClients } from '../../hooks/useClients';
+import { useUnusedCoupons } from '../../hooks/useCoupons';
 import { useDaySummary } from '../../hooks/useDaySummary';
 import { useKeyboardShortcuts } from '../../hooks/useKeyboardShortcuts';
 import { useProducts } from '../../hooks/useProducts';
@@ -28,28 +30,34 @@ export function MostradorPage() {
   const products = useProducts();
   const { clients, clientsById } = useClients();
   const daySummary = useDaySummary();
+  const { unusedCoupons, reload: reloadCoupons } = useUnusedCoupons();
   const ticket = useTicket(products.productsById);
 
   const [query, setQuery] = useState('');
   const [clientId, setClientId] = useState(null);
+  const [coupon, setCoupon] = useState(null);
   const searchRef = useRef(null);
   const clientInputRef = useRef(null);
 
   const selectedClient = clientId ? clientsById.get(clientId) : null;
   const visibleProducts = products.products.filter((product) => matchesProduct(product, query));
   const canCharge = !ticket.isEmpty && Boolean(selectedClient);
+  const total = coupon ? applyDiscount(ticket.total, coupon.discount) : ticket.total;
+  const totals = { subtotal: ticket.total, discount: ticket.total - total, total };
 
   const { clear: clearTicket } = ticket;
   const { reload: reloadProducts } = products;
   const { reload: reloadDaySummary } = daySummary;
 
-  // After a sale: empty the ticket and refresh stock and today's totals from the backend.
+  // After a sale: empty the ticket and refresh stock, coupons and today's totals from the backend.
   const handleCharged = useCallback(() => {
     clearTicket();
     setClientId(null);
+    setCoupon(null);
     reloadProducts();
+    reloadCoupons();
     reloadDaySummary();
-  }, [clearTicket, reloadProducts, reloadDaySummary]);
+  }, [clearTicket, reloadProducts, reloadCoupons, reloadDaySummary]);
 
   const sale = useCharge({ onCharged: handleCharged });
 
@@ -59,7 +67,7 @@ export function MostradorPage() {
   }
 
   function chargeTicket() {
-    if (canCharge && !sale.isCharging) sale.charge(selectedClient, ticket.lines);
+    if (canCharge && !sale.isCharging) sale.charge(selectedClient, ticket.lines, coupon);
   }
 
   useKeyboardShortcuts({
@@ -96,7 +104,14 @@ export function MostradorPage() {
 
       <Ticket
         ticket={ticket}
+        totals={totals}
         productsById={products.productsById}
+        couponField={{
+          unusedCoupons,
+          appliedCoupon: coupon,
+          onApply: setCoupon,
+          onRemove: () => setCoupon(null)
+        }}
         clientPicker={{
           clients,
           selectedClient,

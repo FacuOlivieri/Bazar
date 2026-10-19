@@ -389,6 +389,12 @@ Tinta sobre papel, mayúsculas condensadas, sin redondeo; se sienten como rótul
 - Al agregarse, la línea entra deslizándose 16px desde la derecha con fundido (220ms, `cubic-bezier(.16,1,.3,1)`); se desactiva con `prefers-reduced-motion`.
 - Pie: "TOTAL" en Barlow Condensed 18px con tracking 0.1em frente al total estarcido gigante, y COBRAR debajo; separado por filete de 3px.
 
+### Cupón
+- **Código** (`coupon-code`): estarcido 17px con tracking 0.08em, siempre en mayúsculas y sin espacios (VECINO15). Usado: tinta tenue y tachado.
+- **Talón aplicado** (`coupon-stub`): cartón teñido con borde punteado de 2px en tinta, como un vale recortado; lleva «CUPÓN», el código, el descuento tabular (−15 %) y el enlace «Quitar». Nunca en rojo: un descuento no es urgente.
+- **Desglose en el pie del ticket:** con cupón aplicado, arriba del total aparecen Subtotal y «Cupón CÓDIGO (N %)» con el monto descontado, en Barlow 14px `ink-muted` con cifras de tinta.
+- **Estado en la tabla:** «Disponible» es un bloque de tinta con texto blanco; «Usado» es un contorno de 2px `disabled-border` con texto `ink-faint`. Ninguno usa rojo.
+
 ### Sello de stock (componente firma)
 La marca de cartón que dice la verdad del stock.
 - **Texto:** REPONER (stock entre 1 y 4) o SIN STOCK (stock 0). Con stock de 5 o más no hay sello.

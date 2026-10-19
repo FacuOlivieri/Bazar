@@ -1,10 +1,11 @@
 import { EmptyState, ErrorState, SkeletonRows } from '../../components/ui/Feedback';
 import { RowActions } from '../../components/ui/RecordForm';
-import { clientFullName, formatDni } from '../../domain/client';
+import { clientFullName, formatDni, formatPhone } from '../../domain/client';
 import { formatNumber } from '../../domain/format';
 import { LOAD_STATUS } from '../../hooks/useResource';
 
-const COLUMN_COUNT = 4;
+const COLUMN_COUNT = 6;
+const MISSING = '—';
 
 function ClientRow({ client, isSelected, onEdit, onDelete, isBusy }) {
   return (
@@ -12,8 +13,11 @@ function ClientRow({ client, isSelected, onEdit, onDelete, isBusy }) {
       <td className="col-number product-number">{formatNumber(client.idClientDTO)}</td>
       <td className="col-name">
         <span className="client-surname">{client.surname}</span>, {client.name}
+        {client.adress && <span className="client-address">{client.adress}</span>}
       </td>
-      <td className="col-dni num">{formatDni(client.dni) || '—'}</td>
+      <td className="col-dni num">{formatDni(client.dni) || MISSING}</td>
+      <td className="col-phone num">{client.phone ? formatPhone(client.phone) : MISSING}</td>
+      <td className="col-email">{client.email || MISSING}</td>
       <td className="col-action">
         <RowActions recordName={clientFullName(client)} onEdit={() => onEdit(client)} onDelete={() => onDelete(client)} isBusy={isBusy} />
       </td>
@@ -36,6 +40,8 @@ export function ClientsTable({ clients, status, error, onRetry, selectedId, onEd
             <th scope="col" className="col-number">N.º</th>
             <th scope="col">Apellido y nombre</th>
             <th scope="col" className="col-dni">DNI</th>
+            <th scope="col" className="col-phone">Teléfono</th>
+            <th scope="col" className="col-email">Email</th>
             <th scope="col"><span className="sr-only">Acciones</span></th>
           </tr>
         </thead>
