@@ -1,0 +1,186 @@
+/* Three-column module: rail · work area · side column. */
+.shell {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  background: var(--color-paper);
+}
+
+.rail {
+  flex: 1 1 var(--rail-width);
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-hair);
+  padding: 28px 20px;
+  background: var(--color-kraft);
+  border-right: var(--rule-structure);
+}
+
+.rail__brand {
+  font: 800 42px/1 var(--font-stencil);
+  letter-spacing: 0.04em;
+}
+
+.rail__subtitle {
+  margin: 6px 0 22px;
+  font: 700 12px var(--font-condensed);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-kraft-ink);
+}
+
+.rail__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-hair);
+}
+
+.rail__footer {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: var(--rule-control);
+  font-size: 14px;
+  color: var(--color-kraft-ink);
+}
+
+.rail__footer-title {
+  font: 700 15px var(--font-condensed);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: var(--touch-target);
+  padding: 0 12px;
+  font: 700 17px var(--font-condensed);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  text-decoration: none;
+  border: 2px solid transparent;
+}
+
+.nav-link:hover {
+  border-color: var(--color-ink);
+}
+
+.nav-link.is-current {
+  background: var(--color-ink);
+  color: var(--color-kraft-pale);
+}
+
+.nav-link.is-current:focus-visible {
+  outline-color: var(--color-kraft);
+}
+
+.nav-link__kbd {
+  font: 600 12px var(--font-body);
+}
+
+.work {
+  flex: 999 1 560px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-stack);
+  padding: var(--space-work-y) var(--space-work-x);
+}
+
+.work__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+}
+
+.work__title-group {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.side-column {
+  flex: 1 1 var(--side-column-width);
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-sheet);
+  border-left: var(--rule-structure);
+}
+
+.side-column__body {
+  padding: 18px var(--space-panel-x);
+}
+
+@media (max-width: 800px) {
+  .shell {
+    align-content: flex-start;
+  }
+
+  .rail {
+    flex-basis: 100%;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 12px var(--space-gutter);
+    border-right: 0;
+    border-bottom: var(--rule-structure);
+  }
+
+  .rail__brand {
+    font-size: 30px;
+  }
+
+  .rail__subtitle,
+  .rail__footer,
+  .nav-link__kbd {
+    display: none;
+  }
+
+  .rail__nav {
+    flex-direction: row;
+    margin-left: auto;
+  }
+
+  .work {
+    padding: 20px var(--space-gutter);
+  }
+
+  .side-column {
+    border-left: 0;
+    border-top: var(--rule-structure);
+  }
+
+  .side-column__body,
+  .panel-header {
+    padding-left: var(--space-gutter);
+    padding-right: var(--space-gutter);
+  }
+}
+
+/* Narrow phones: the nav drops under the brand and splits the width evenly. */
+@media (max-width: 560px) {
+  .rail {
+    flex-wrap: wrap;
+    row-gap: 8px;
+  }
+
+  .rail__nav {
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+
+  .rail__nav .nav-link {
+    flex: 1;
+    justify-content: center;
+    padding: 0 6px;
+    font-size: 16px;
+  }
+}

@@ -1,0 +1,54 @@
+/* Design tokens from DESIGN.md ("La caja de proveedor"). */
+:root {
+  /* Colors */
+  --color-ink: #1d1a17;
+  --color-ink-hover: #3a332c;
+  --color-ink-muted: #5c554d;
+  --color-ink-faint: #6f675e;
+  --color-kraft: #c39a6b;
+  --color-kraft-ink: #2a2119;
+  --color-kraft-pale: #e8d3b6;
+  --color-paper: #fbfaf8;
+  --color-sheet: #ffffff;
+  --color-carton-tint: #efe6da;
+  --color-row-hover: #f6f1ea;
+  --color-rule-light: #e3ddd4;
+  --color-rule-dashed: #d6cec3;
+  --color-disabled-bg: #f4f1ec;
+  --color-disabled-border: #cfc7bc;
+  --color-disabled-fill: #d9d2c8;
+  --color-on-dark-muted: #e9e4dc;
+  --color-flexo-red: #c8102e;
+  --color-flexo-red-deep: #a50d26;
+
+  /* Type families */
+  --font-stencil: 'Big Shoulders Stencil Text', sans-serif;
+  --font-condensed: 'Barlow Condensed', sans-serif;
+  --font-body: Barlow, system-ui, sans-serif;
+
+  /* Spacing */
+  --space-hair: 6px;
+  --space-cell-x: 10px;
+  --space-cell-y: 12px;
+  --space-gutter: 16px;
+  --space-stack: 18px;
+  --space-panel-x: 26px;
+  --space-work-y: 28px;
+  --space-work-x: 32px;
+
+  /* Rules */
+  --rule-structure: 3px solid var(--color-ink);
+  --rule-control: 2px solid var(--color-ink);
+  --rule-row: 1px solid var(--color-rule-light);
+  --rule-dashed: 1px dashed var(--color-rule-dashed);
+
+  /* Sizes */
+  --touch-target: 44px;
+  --rail-width: 232px;
+  --side-column-width: 380px;
+
+  /* Motion */
+  --ease-out: ease-out;
+  --ease-land: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+}

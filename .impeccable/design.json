@@ -1,0 +1,570 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-15T19:10:47.565Z",
+  "title": "Design System: Bazar",
+  "extensions": {
+    "colorMeta": {
+      "flexo-red": {
+        "role": "primary",
+        "displayName": "Rojo flexo",
+        "canonical": "#c8102e",
+        "oklch": "oklch(53.0% 0.207 22.3)",
+        "tonalRamp": [
+          "#1f0002",
+          "#4a010a",
+          "#7b0217",
+          "#b10025",
+          "#e13542",
+          "#ff7171",
+          "#ffb4b1",
+          "#fee9e7"
+        ]
+      },
+      "flexo-red-deep": {
+        "role": "primary",
+        "displayName": "Rojo flexo profundo",
+        "canonical": "#a50d26",
+        "oklch": "oklch(46.1% 0.179 21.9)",
+        "tonalRamp": [
+          "#1f0002",
+          "#4b000a",
+          "#7c0018",
+          "#ac192b",
+          "#d6474d",
+          "#ff7072",
+          "#feb4b1",
+          "#ffe8e7"
+        ]
+      },
+      "kraft": {
+        "role": "secondary",
+        "displayName": "Kraft",
+        "canonical": "#c39a6b",
+        "oklch": "oklch(71.3% 0.080 69.8)",
+        "tonalRamp": [
+          "#130800",
+          "#351e01",
+          "#5a3701",
+          "#7a5526",
+          "#9f7849",
+          "#c59c6d",
+          "#edc292",
+          "#ffebd5"
+        ]
+      },
+      "kraft-pale": {
+        "role": "secondary",
+        "displayName": "Kraft claro",
+        "canonical": "#e8d3b6",
+        "oklch": "oklch(87.7% 0.045 75.9)",
+        "tonalRamp": [
+          "#130900",
+          "#302107",
+          "#4e3c24",
+          "#6d5a41",
+          "#907d62",
+          "#b5a185",
+          "#dcc7aa",
+          "#ffebd1"
+        ]
+      },
+      "kraft-ink": {
+        "role": "secondary",
+        "displayName": "Tinta de kraft",
+        "canonical": "#2a2119",
+        "oklch": "oklch(25.6% 0.020 63.4)",
+        "tonalRamp": [
+          "#110904",
+          "#2b221a",
+          "#483e35",
+          "#665b52",
+          "#897e74",
+          "#aea298",
+          "#d4c8be",
+          "#f9ece1"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "canonical": "#1d1a17",
+        "oklch": "oklch(22.0% 0.007 67.4)",
+        "tonalRamp": [
+          "#0d0b08",
+          "#272320",
+          "#423f3c",
+          "#605d59",
+          "#837f7c",
+          "#a8a4a0",
+          "#cecac5",
+          "#f2eee9"
+        ]
+      },
+      "ink-hover": {
+        "role": "neutral",
+        "displayName": "Tinta en hover",
+        "canonical": "#3a332c",
+        "oklch": "oklch(32.6% 0.016 67.2)",
+        "tonalRamp": [
+          "#100a05",
+          "#29231c",
+          "#463e37",
+          "#645c54",
+          "#877f77",
+          "#aba39a",
+          "#d2c9c0",
+          "#f6ede4"
+        ]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Tinta apagada",
+        "canonical": "#5c554d",
+        "oklch": "oklch(45.4% 0.016 71.1)",
+        "tonalRamp": [
+          "#0f0a05",
+          "#29231c",
+          "#453e37",
+          "#635c54",
+          "#867f76",
+          "#aba39a",
+          "#d1c9c0",
+          "#f5ede3"
+        ]
+      },
+      "ink-faint": {
+        "role": "neutral",
+        "displayName": "Tinta tenue",
+        "canonical": "#6f675e",
+        "oklch": "oklch(51.8% 0.017 70.7)",
+        "tonalRamp": [
+          "#100a04",
+          "#29231b",
+          "#463e36",
+          "#645c53",
+          "#877f75",
+          "#aca399",
+          "#d2c9bf",
+          "#f6ede2"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Papel",
+        "canonical": "#fbfaf8",
+        "oklch": "oklch(98.5% 0.003 84.6)",
+        "tonalRamp": [
+          "#0c0b0a",
+          "#252422",
+          "#40403e",
+          "#5e5d5c",
+          "#81807e",
+          "#a5a4a2",
+          "#cbcac8",
+          "#efeeec"
+        ]
+      },
+      "sheet": {
+        "role": "neutral",
+        "displayName": "Hoja",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "carton-tint": {
+        "role": "neutral",
+        "displayName": "Cartón teñido",
+        "canonical": "#efe6da",
+        "oklch": "oklch(92.9% 0.019 75.3)",
+        "tonalRamp": [
+          "#100a04",
+          "#29231a",
+          "#463f35",
+          "#645c52",
+          "#877f74",
+          "#aca398",
+          "#d2c9bd",
+          "#f6ede1"
+        ]
+      },
+      "row-hover": {
+        "role": "neutral",
+        "displayName": "Hover de fila",
+        "canonical": "#f6f1ea",
+        "oklch": "oklch(96.0% 0.011 76.6)",
+        "tonalRamp": [
+          "#0e0b07",
+          "#27231e",
+          "#433f3a",
+          "#615d57",
+          "#847f79",
+          "#a8a49d",
+          "#cfcac3",
+          "#f3eee7"
+        ]
+      },
+      "rule-light": {
+        "role": "neutral",
+        "displayName": "Filete liviano",
+        "canonical": "#e3ddd4",
+        "oklch": "oklch(90.0% 0.014 78.3)",
+        "tonalRamp": [
+          "#0e0a05",
+          "#28231d",
+          "#443f38",
+          "#625d55",
+          "#857f77",
+          "#a9a49b",
+          "#cfcac1",
+          "#f4eee4"
+        ]
+      },
+      "rule-dashed": {
+        "role": "neutral",
+        "displayName": "Filete punteado",
+        "canonical": "#d6cec3",
+        "oklch": "oklch(85.5% 0.017 76.1)",
+        "tonalRamp": [
+          "#0f0a04",
+          "#29231b",
+          "#453f36",
+          "#635c53",
+          "#867f75",
+          "#aba399",
+          "#d1c9be",
+          "#f5ede2"
+        ]
+      },
+      "disabled-bg": {
+        "role": "neutral",
+        "displayName": "Fondo deshabilitado",
+        "canonical": "#f4f1ec",
+        "oklch": "oklch(95.9% 0.007 80.7)",
+        "tonalRamp": [
+          "#0d0b08",
+          "#262420",
+          "#423f3b",
+          "#605d59",
+          "#82807b",
+          "#a7a49f",
+          "#cdcac5",
+          "#f1eee9"
+        ]
+      },
+      "disabled-border": {
+        "role": "neutral",
+        "displayName": "Borde deshabilitado",
+        "canonical": "#cfc7bc",
+        "oklch": "oklch(83.3% 0.018 76.1)",
+        "tonalRamp": [
+          "#0f0a04",
+          "#29231b",
+          "#453f36",
+          "#635c53",
+          "#867f75",
+          "#aba399",
+          "#d1c9be",
+          "#f5ede2"
+        ]
+      },
+      "disabled-fill": {
+        "role": "neutral",
+        "displayName": "Relleno deshabilitado",
+        "canonical": "#d9d2c8",
+        "oklch": "oklch(86.7% 0.016 77.1)",
+        "tonalRamp": [
+          "#0f0a05",
+          "#28231c",
+          "#443f37",
+          "#635d54",
+          "#867f76",
+          "#aaa49a",
+          "#d0c9bf",
+          "#f5ede3"
+        ]
+      },
+      "on-dark-muted": {
+        "role": "neutral",
+        "displayName": "Texto apagado sobre tinta",
+        "canonical": "#e9e4dc",
+        "oklch": "oklch(92.1% 0.012 79.8)",
+        "tonalRamp": [
+          "#0e0b06",
+          "#27231e",
+          "#433f39",
+          "#615d56",
+          "#848078",
+          "#a9a49c",
+          "#cfcac2",
+          "#f3eee6"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display-total": {
+        "displayName": "Display total",
+        "purpose": "Total del ticket; 40px en mobile. Cifras tabulares."
+      },
+      "display-brand": {
+        "displayName": "Display marca",
+        "purpose": "Marca BAZAR en el riel; 30px en mobile."
+      },
+      "headline-stencil": {
+        "displayName": "Headline estarcido",
+        "purpose": "Título del encabezado oscuro del ticket/panel, en mayúsculas."
+      },
+      "action-stencil": {
+        "displayName": "Acción estarcida",
+        "purpose": "Texto de COBRAR · F12; 20px en mobile."
+      },
+      "code": {
+        "displayName": "Código",
+        "purpose": "N.º de producto: idProduct rellenado a cuatro dígitos."
+      },
+      "stamp": {
+        "displayName": "Sello",
+        "purpose": "REPONER / SIN STOCK."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Título de pantalla, en mayúsculas."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Título de estados vacíos, en mayúsculas."
+      },
+      "nav": {
+        "displayName": "Nav",
+        "purpose": "Ítems del riel, en mayúsculas."
+      },
+      "button": {
+        "displayName": "Botón",
+        "purpose": "Etiquetas de botón en mayúsculas (14-16px según control)."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Encabezados de tabla, etiquetas de campo, grupos por marca; en mayúsculas."
+      },
+      "figure": {
+        "displayName": "Cifra",
+        "purpose": "Stock en unidades y cantidad del stepper (18px), tabular."
+      },
+      "search": {
+        "displayName": "Búsqueda",
+        "purpose": "Buscador principal del Mostrador; 18px en el filtro de Productos y en mobile chico."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto de filas y formularios; nombre 500, precio 600."
+      },
+      "body-small": {
+        "displayName": "Body chico",
+        "purpose": "Ayudas, subtítulos, resumen del riel."
+      },
+      "caption": {
+        "displayName": "Caption",
+        "purpose": "Metadatos de línea (marca · precio unitario; N.º · quedan N u.)."
+      },
+      "kbd": {
+        "displayName": "Kbd",
+        "purpose": "Atajos F1/F2/F3."
+      }
+    },
+    "shadows": [
+      {
+        "name": "sticky-foot",
+        "value": "0 -8px 24px rgba(29,26,23,.14)",
+        "purpose": "Solo el pie de cobro fijo en mobile (<=800px). Ninguna otra sombra en el sistema."
+      }
+    ],
+    "motion": [
+      {
+        "name": "hover-fade",
+        "value": "150ms ease-out",
+        "purpose": "Transición de fondo/color en botones y hover de fila."
+      },
+      {
+        "name": "ticket-line-land",
+        "value": "220ms cubic-bezier(.16,1,.3,1); from translateX(16px) opacity 0",
+        "purpose": "Entrada de una línea nueva en el ticket. Desactivada con prefers-reduced-motion."
+      },
+      {
+        "name": "stamp-tilt",
+        "value": "rotate([-4,-2.5,-3.5,-1.5,-3][idProduct % 5] deg)",
+        "purpose": "Inclinación fija del sello por producto; estática, no animada."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stack",
+        "value": "800px",
+        "purpose": "Riel a barra superior, ticket/panel apilado, pie de cobro fijo."
+      },
+      {
+        "name": "compact",
+        "value": "480px",
+        "purpose": "Oculta N.º y Marca, sello en su propia línea, Agregar solo ícono 44x44."
+      }
+    ],
+    "focus": {
+      "value": "outline: 3px solid #1d1a17; outline-offset: 2px",
+      "onDark": "outline-color: #c39a6b"
+    },
+    "borders": {
+      "structure": "3px solid #1d1a17",
+      "control": "2px solid #1d1a17",
+      "stamp": "2.5px solid #c8102e",
+      "row": "1px solid #e3ddd4",
+      "ticketLine": "1px dashed #d6cec3"
+    }
+  },
+  "components": [
+    {
+      "name": "Botón COBRAR",
+      "kind": "button",
+      "refersTo": "button-pay",
+      "description": "Acción de cobro del ticket, rojo flexo a todo el ancho. Deshabilitado sin ítems o sin cliente.",
+      "html": "<div class=\"ds-wrap\"><button class=\"ds-btn-pay\">COBRAR · F12</button><button class=\"ds-btn-pay\" disabled>COBRAR · F12</button></div>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text:wght@700;800&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap');:host{--color-ink:#1d1a17;--color-ink-hover:#3a332c;--color-ink-muted:#5c554d;--color-ink-faint:#6f675e;--color-kraft:#c39a6b;--color-kraft-pale:#e8d3b6;--color-kraft-ink:#2a2119;--color-paper:#fbfaf8;--color-sheet:#fff;--color-carton-tint:#efe6da;--color-flexo-red:#c8102e;--color-flexo-red-deep:#a50d26;--color-disabled-bg:#f4f1ec;--color-disabled-border:#cfc7bc;--color-disabled-fill:#d9d2c8;--color-rule-light:#e3ddd4}.ds-wrap{display:flex;flex-direction:column;gap:12px;width:360px}.ds-btn-pay{width:100%;min-height:64px;background:var(--color-flexo-red);color:#fff;border:0;border-radius:0;font:800 24px 'Big Shoulders Stencil Text',sans-serif;letter-spacing:.12em;cursor:pointer;transition:background .15s ease-out}.ds-btn-pay:hover{background:var(--color-flexo-red-deep)}.ds-btn-pay:focus-visible{outline:3px solid var(--color-ink);outline-offset:2px}.ds-btn-pay:disabled{background:var(--color-disabled-fill);color:var(--color-ink-muted);cursor:not-allowed}"
+    },
+    {
+      "name": "Botón primario",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Crear y guardar: bloque de tinta.",
+      "html": "<button class=\"ds-btn-primary\"><svg aria-hidden=\"true\" width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\"><path d=\"M7 1v12M1 7h12\"/></svg> Nuevo producto</button>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text:wght@700;800&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap');:host{--color-ink:#1d1a17;--color-ink-hover:#3a332c;--color-ink-muted:#5c554d;--color-ink-faint:#6f675e;--color-kraft:#c39a6b;--color-kraft-pale:#e8d3b6;--color-kraft-ink:#2a2119;--color-paper:#fbfaf8;--color-sheet:#fff;--color-carton-tint:#efe6da;--color-flexo-red:#c8102e;--color-flexo-red-deep:#a50d26;--color-disabled-bg:#f4f1ec;--color-disabled-border:#cfc7bc;--color-disabled-fill:#d9d2c8;--color-rule-light:#e3ddd4}.ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;font:700 15px 'Barlow Condensed',sans-serif;letter-spacing:.08em;text-transform:uppercase;border:2px solid var(--color-ink);border-radius:0;cursor:pointer;transition:background .15s ease-out,color .15s ease-out;background:var(--color-ink);color:#fff}.ds-btn-primary:hover{background:var(--color-ink-hover)}.ds-btn-primary:focus-visible{outline:3px solid var(--color-ink);outline-offset:2px}"
+    },
+    {
+      "name": "Botón fantasma",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Cancelar / No: hoja blanca con contorno de tinta.",
+      "html": "<button class=\"ds-btn-ghost\">Cancelar</button>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text:wght@700;800&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap');:host{--color-ink:#1d1a17;--color-ink-hover:#3a332c;--color-ink-muted:#5c554d;--color-ink-faint:#6f675e;--color-kraft:#c39a6b;--color-kraft-pale:#e8d3b6;--color-kraft-ink:#2a2119;--color-paper:#fbfaf8;--color-sheet:#fff;--color-carton-tint:#efe6da;--color-flexo-red:#c8102e;--color-flexo-red-deep:#a50d26;--color-disabled-bg:#f4f1ec;--color-disabled-border:#cfc7bc;--color-disabled-fill:#d9d2c8;--color-rule-light:#e3ddd4}.ds-btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;font:700 15px 'Barlow Condensed',sans-serif;letter-spacing:.08em;text-transform:uppercase;border:2px solid var(--color-ink);border-radius:0;cursor:pointer;transition:background .15s ease-out,color .15s ease-out;background:#fff;color:var(--color-ink)}.ds-btn-ghost:hover{background:var(--color-carton-tint)}.ds-btn-ghost:focus-visible{outline:3px solid var(--color-ink);outline-offset:2px}"
+    },
+    {
+      "name": "Confirmación destructiva",
+      "kind": "button",
+      "refersTo": "button-danger-solid",
+      "description": "Excepción citada del rojo: solo el botón final de una acción irreversible; el disparador es un enlace de tinta.",
+      "html": "<div class=\"ds-confirm\" role=\"alert\"><div>¿Eliminar «Balde plástico 10 L»? No se puede deshacer.</div><div class=\"ds-row\"><button class=\"ds-btn-danger\">Sí, eliminar</button><button class=\"ds-btn-ghost\">No</button></div></div>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text:wght@700;800&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap');:host{--color-ink:#1d1a17;--color-ink-hover:#3a332c;--color-ink-muted:#5c554d;--color-ink-faint:#6f675e;--color-kraft:#c39a6b;--color-kraft-pale:#e8d3b6;--color-kraft-ink:#2a2119;--color-paper:#fbfaf8;--color-sheet:#fff;--color-carton-tint:#efe6da;--color-flexo-red:#c8102e;--color-flexo-red-deep:#a50d26;--color-disabled-bg:#f4f1ec;--color-disabled-border:#cfc7bc;--color-disabled-fill:#d9d2c8;--color-rule-light:#e3ddd4}.ds-confirm{display:flex;flex-direction:column;gap:10px;font:400 16px Barlow,sans-serif;color:var(--color-ink)}.ds-row{display:flex;gap:10px}.ds-btn-danger,.ds-btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;font:700 15px 'Barlow Condensed',sans-serif;letter-spacing:.08em;text-transform:uppercase;border:2px solid var(--color-ink);border-radius:0;cursor:pointer;transition:background .15s ease-out,color .15s ease-out;}.ds-btn-danger{background:var(--color-flexo-red);color:#fff;border-color:var(--color-flexo-red)}.ds-btn-danger:hover{background:var(--color-flexo-red-deep)}.ds-btn-ghost{background:#fff;color:var(--color-ink)}.ds-btn-ghost:hover{background:var(--color-carton-tint)}.ds-btn-danger:focus-visible{outline:3px solid var(--color-ink);outline-offset:2px}.ds-btn-ghost:focus-visible{outline:3px solid var(--color-ink);outline-offset:2px}"
+    },
+    {
+      "name": "Botón Agregar",
+      "kind": "button",
+      "refersTo": "button-add",
+      "description": "Agrega una unidad al ticket desde la fila; se deshabilita al llegar al stock.",
+      "html": "<div class=\"ds-row\"><button class=\"ds-btn-add\"><svg aria-hidden=\"true\" width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\"><path d=\"M7 1v12M1 7h12\"/></svg> Agregar</button><button class=\"ds-btn-add\" disabled><svg aria-hidden=\"true\" width=\"14\" height=\"14\" viewBox=\"0 0 14 14\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\"><path d=\"M7 1v12M1 7h12\"/></svg> Agregar</button></div>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text:wght@700;800&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap');:host{--color-ink:#1d1a17;--color-ink-hover:#3a332c;--color-ink-muted:#5c554d;--color-ink-faint:#6f675e;--color-kraft:#c39a6b;--color-kraft-pale:#e8d3b6;--color-kraft-ink:#2a2119;--color-paper:#fbfaf8;--color-sheet:#fff;--color-carton-tint:#efe6da;--color-flexo-red:#c8102e;--color-flexo-red-deep:#a50d26;--color-disabled-bg:#f4f1ec;--color-disabled-border:#cfc7bc;--color-disabled-fill:#d9d2c8;--color-rule-light:#e3ddd4}.ds-row{display:flex;gap:10px}.ds-btn-add{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;font:700 14px 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;background:#fff;color:var(--color-ink);border:2px solid var(--color-ink);border-radius:0;cursor:pointer;transition:background .15s ease-out,color .15s ease-out}.ds-btn-add:hover{background:var(--color-ink);color:#fff}.ds-btn-add:focus-visible{outline:3px solid var(--color-ink);outline-offset:2px}.ds-btn-add:disabled{border-color:var(--color-disabled-border);color:var(--color-ink-faint);background:var(--color-disabled-bg);cursor:not-allowed}"
+    },
+    {
+      "name": "Buscador principal",
+      "kind": "input",
+      "refersTo": "search-bar",
+      "description": "Control más grande del Mostrador: borde de 3px, lupa SVG, atajo F2.",
+      "html": "<label class=\"ds-search\"><svg aria-hidden=\"true\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.2\" stroke-linecap=\"square\"><circle cx=\"10.5\" cy=\"10.5\" r=\"6.5\"/><path d=\"M15.5 15.5L21 21\"/></svg><input class=\"ds-search-input\" type=\"search\" placeholder=\"Buscar producto o marca…\" aria-label=\"Buscar producto por nombre o marca\"><kbd class=\"ds-kbd\">F2</kbd></label>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text:wght@700;800&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap');:host{--color-ink:#1d1a17;--color-ink-hover:#3a332c;--color-ink-muted:#5c554d;--color-ink-faint:#6f675e;--color-kraft:#c39a6b;--color-kraft-pale:#e8d3b6;--color-kraft-ink:#2a2119;--color-paper:#fbfaf8;--color-sheet:#fff;--color-carton-tint:#efe6da;--color-flexo-red:#c8102e;--color-flexo-red-deep:#a50d26;--color-disabled-bg:#f4f1ec;--color-disabled-border:#cfc7bc;--color-disabled-fill:#d9d2c8;--color-rule-light:#e3ddd4}.ds-search{display:flex;align-items:center;gap:14px;width:560px;border:3px solid var(--color-ink);background:#fff;padding:14px 18px;color:var(--color-ink)}.ds-search:focus-within{outline:3px solid var(--color-ink);outline-offset:3px}.ds-search-input{flex:1;min-width:0;border:0;outline:0;background:transparent;font:500 22px Barlow,sans-serif;color:var(--color-ink)}.ds-search-input::placeholder{color:var(--color-ink-faint)}.ds-kbd{font:600 13px Barlow,sans-serif;border:1.5px solid var(--color-ink);padding:2px 8px}"
+    },
+    {
+      "name": "Campo",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Campo de formulario de 44px con etiqueta condensada encima.",
+      "html": "<div class=\"ds-field\"><label for=\"ds-f\">Precio $</label><input id=\"ds-f\" class=\"ds-input\" type=\"number\" value=\"4800\"></div>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text:wght@700;800&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap');:host{--color-ink:#1d1a17;--color-ink-hover:#3a332c;--color-ink-muted:#5c554d;--color-ink-faint:#6f675e;--color-kraft:#c39a6b;--color-kraft-pale:#e8d3b6;--color-kraft-ink:#2a2119;--color-paper:#fbfaf8;--color-sheet:#fff;--color-carton-tint:#efe6da;--color-flexo-red:#c8102e;--color-flexo-red-deep:#a50d26;--color-disabled-bg:#f4f1ec;--color-disabled-border:#cfc7bc;--color-disabled-fill:#d9d2c8;--color-rule-light:#e3ddd4}.ds-field{display:flex;flex-direction:column;gap:6px;width:240px}.ds-field label{font:700 13px 'Barlow Condensed',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--color-ink-muted)}.ds-input{min-height:44px;padding:0 12px;font:500 16px Barlow,sans-serif;font-variant-numeric:tabular-nums;color:var(--color-ink);background:#fff;border:2px solid var(--color-ink);border-radius:0}.ds-input:focus{outline:3px solid var(--color-ink);outline-offset:2px}"
+    },
+    {
+      "name": "Riel de navegación",
+      "kind": "nav",
+      "refersTo": "rail",
+      "description": "Riel kraft con filete de tinta de 3px; ítem actual como bloque de tinta.",
+      "html": "<nav class=\"ds-rail\"><div class=\"ds-brand\">BAZAR</div><div class=\"ds-sub\">Gestión del local</div><a class=\"ds-nav is-current\" href=\"#\">Mostrador <kbd>F1</kbd></a><a class=\"ds-nav\" href=\"#\">Productos <kbd>F3</kbd></a></nav>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text:wght@700;800&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap');:host{--color-ink:#1d1a17;--color-ink-hover:#3a332c;--color-ink-muted:#5c554d;--color-ink-faint:#6f675e;--color-kraft:#c39a6b;--color-kraft-pale:#e8d3b6;--color-kraft-ink:#2a2119;--color-paper:#fbfaf8;--color-sheet:#fff;--color-carton-tint:#efe6da;--color-flexo-red:#c8102e;--color-flexo-red-deep:#a50d26;--color-disabled-bg:#f4f1ec;--color-disabled-border:#cfc7bc;--color-disabled-fill:#d9d2c8;--color-rule-light:#e3ddd4}.ds-rail{width:232px;background:var(--color-kraft);border-right:3px solid var(--color-ink);padding:28px 20px;display:flex;flex-direction:column;gap:6px;color:var(--color-ink)}.ds-brand{font:800 42px/1 'Big Shoulders Stencil Text',sans-serif;letter-spacing:.04em}.ds-sub{font:700 12px 'Barlow Condensed',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--color-kraft-ink);margin:6px 0 22px}.ds-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;padding:0 12px;font:700 17px 'Barlow Condensed',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--color-ink);text-decoration:none;border:2px solid transparent}.ds-nav kbd{font:600 12px Barlow,sans-serif}.ds-nav:hover{border-color:var(--color-ink)}.ds-nav.is-current{background:var(--color-ink);color:var(--color-kraft-pale)}.ds-nav:focus-visible{outline:3px solid var(--color-ink);outline-offset:2px}.ds-nav.is-current:focus-visible{outline-color:var(--color-kraft)}"
+    },
+    {
+      "name": "Pestañas",
+      "kind": "nav",
+      "refersTo": "tab",
+      "description": "Vista Todos / Stock bajo con conteo; activa subrayada con 4px de tinta.",
+      "html": "<div class=\"ds-tabs\" role=\"tablist\"><button role=\"tab\" aria-selected=\"true\" class=\"ds-tab is-on\">Todos (10)</button><button role=\"tab\" aria-selected=\"false\" class=\"ds-tab\">Stock bajo (4)</button></div>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text:wght@700;800&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap');:host{--color-ink:#1d1a17;--color-ink-hover:#3a332c;--color-ink-muted:#5c554d;--color-ink-faint:#6f675e;--color-kraft:#c39a6b;--color-kraft-pale:#e8d3b6;--color-kraft-ink:#2a2119;--color-paper:#fbfaf8;--color-sheet:#fff;--color-carton-tint:#efe6da;--color-flexo-red:#c8102e;--color-flexo-red-deep:#a50d26;--color-disabled-bg:#f4f1ec;--color-disabled-border:#cfc7bc;--color-disabled-fill:#d9d2c8;--color-rule-light:#e3ddd4}.ds-tabs{display:flex;border-bottom:2px solid var(--color-ink)}.ds-tab{min-height:44px;padding:0 18px;font:700 16px 'Barlow Condensed',sans-serif;letter-spacing:.08em;text-transform:uppercase;font-variant-numeric:tabular-nums;background:transparent;color:var(--color-ink-muted);border:0;border-bottom:4px solid transparent;cursor:pointer}.ds-tab:hover{color:var(--color-ink)}.ds-tab.is-on{color:var(--color-ink);border-bottom-color:var(--color-ink)}.ds-tab:focus-visible{outline:3px solid var(--color-ink);outline-offset:2px}"
+    },
+    {
+      "name": "Sello de stock",
+      "kind": "custom",
+      "refersTo": "stamp",
+      "description": "Componente firma: REPONER (1-4 u.) / SIN STOCK (0 u.), contorno rojo flexo, inclinación fija por idProduct.",
+      "html": "<div class=\"ds-cell\"><span class=\"ds-fig\">2 u.</span><span class=\"ds-stamp\" style=\"transform:rotate(-3.5deg)\">REPONER</span></div><div class=\"ds-cell\"><span class=\"ds-fig\">0 u.</span><span class=\"ds-stamp\" style=\"transform:rotate(-1.5deg)\">SIN STOCK</span></div>",
+      "css": "@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Text:wght@700;800&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap');:host{--color-ink:#1d1a17;--color-ink-hover:#3a332c;--color-ink-muted:#5c554d;--color-ink-faint:#6f675e;--color-kraft:#c39a6b;--color-kraft-pale:#e8d3b6;--color-kraft-ink:#2a2119;--color-paper:#fbfaf8;--color-sheet:#fff;--color-carton-tint:#efe6da;--color-flexo-red:#c8102e;--color-flexo-red-deep:#a50d26;--color-disabled-bg:#f4f1ec;--color-disabled-border:#cfc7bc;--color-disabled-fill:#d9d2c8;--color-rule-light:#e3ddd4}.ds-cell{padding:12px 10px;border-bottom:1px solid var(--color-rule-light);color:var(--color-ink);white-space:nowrap}.ds-fig{font:700 16px 'Barlow Condensed',sans-serif;font-variant-numeric:tabular-nums}.ds-stamp{display:inline-block;margin-left:10px;padding:2px 8px;border:2.5px solid var(--color-flexo-red);color:var(--color-flexo-red);font:800 13px 'Big Shoulders Stencil Text',sans-serif;letter-spacing:.12em}"
+    }
+  ],
+  "narrative": {
+    "northStar": "La caja de proveedor",
+    "overview": "El panel habla como las cajas que llegan al depósito: cartón corrugado impreso en flexografía, códigos estarcidos, kraft en el lomo y una sola tinta roja para lo que es urgente. No es un POS de SaaS con sidebar blanca y botones azules; es material del local, plano, de tinta y cartón, pensado para usarse detrás del mostrador con un cliente esperando.\n\nLa densidad es operativa: tabla de productos con filas de 44px o más, números tabulares, precio alineado a la derecha y el estado del stock estampado en la fila como una marca de cartón. La estructura es un módulo estricto de tres columnas (riel kraft, área de trabajo, columna de ticket o panel) separadas por filetes de tinta de 3px. Todo es en ángulo recto; la profundidad la dan los filetes y el contraste tinta/papel, no las sombras.\n\nLa tipografía estarcida (Big Shoulders Stencil Text) se reserva para lo que en una caja iría pintado con plantilla: la marca BAZAR, los N.º, los totales, los títulos del panel oscuro, el botón COBRAR y los sellos. Toda la interfaz de trabajo va en Barlow y Barlow Condensed.",
+    "keyCharacteristics": [
+      "Riel kraft a la izquierda con filete de tinta de 3px; papel cálido como fondo; tinta casi negra para todo el texto y los bordes.",
+      "Un solo rojo flexo, con usos contados: sellos REPONER / SIN STOCK, COBRAR y la confirmación destructiva.",
+      "Esquinas a 0px en todo; bordes de 2px en controles, 3px en estructura, 1px en filas.",
+      "Estarcido solo para códigos, totales, títulos del panel oscuro y sellos.",
+      "Sin sombras en reposo; la única sombra es funcional (pie de cobro fijo en mobile)."
+    ],
+    "rules": [
+      {
+        "name": "La Regla de la Tinta Única",
+        "body": "El rojo flexo es urgencia, no decoración. Solo aparece en sellos de stock (REPONER / SIN STOCK), en COBRAR y en la confirmación de una acción irreversible (\"Sí, eliminar\"). El enlace \"Eliminar producto\", el ícono de tacho y los errores comunes van en tinta. Si un rojo nuevo no es urgente en el mismo sentido que REPONER, no va.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla del Cartón",
+        "body": "No hay azules, verdes de éxito ni grises fríos. La confirmación positiva se marca con cartón teñido, borde de tinta y un tilde dibujado en SVG, no con verde.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regla de la Plantilla",
+        "body": "El estarcido solo pinta códigos, totales, la marca, los títulos del encabezado oscuro, COBRAR y los sellos. Nunca texto corrido, nunca etiquetas, nunca botones comunes.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regla del Número Tabular",
+        "body": "Todo precio, cantidad, stock, DNI y N.º usa cifras tabulares (`font-variant-numeric: tabular-nums`). Los precios van alineados a la derecha y sin cortar (`white-space: nowrap`), con formato `$ 4.800` (es-AR).",
+        "section": "typography"
+      },
+      {
+        "name": "La Regla del Filete",
+        "body": "Si algo necesita separarse, se separa con un filete de tinta, no con una sombra. La única sombra del sistema es la del pie fijo en mobile.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** reservar el rojo flexo para sellos REPONER / SIN STOCK, COBRAR y \"Sí, eliminar\"; todo lo demás en tinta.",
+      "**Do** usar ángulo recto (0px) en todos los elementos y separar con filetes de tinta de 3px (estructura), 2px (controles) y 1px (filas).",
+      "**Do** mostrar el N.º como idProduct rellenado a cuatro dígitos en estarcido, y toda cifra en números tabulares.",
+      "**Do** mantener los objetivos táctiles en 44px como mínimo, y bajar a 40px solo dentro de filas.",
+      "**Do** dar foco visible con contorno de 3px de tinta (kraft sobre fondos de tinta).",
+      "**Do** dibujar los íconos como SVG en línea de trazo con `currentColor`.",
+      "**Do** rotular con \"Datos de ejemplo\" toda pantalla que muestre datos de muestra.",
+      "**Do** confirmar acciones irreversibles en línea, con el disparador en tinta y solo el botón final en rojo sólido."
+    ],
+    "donts": [
+      "**Don't** armar el clásico POS de SaaS: sidebar blanca, acentos azules, tarjetas redondeadas con sombra.",
+      "**Don't** usar el rojo flexo para errores comunes, enlaces de borrado, íconos o decoración.",
+      "**Don't** usar el estarcido en texto corrido, etiquetas o botones que no sean COBRAR.",
+      "**Don't** usar sombras para separar superficies; la única sombra es la del pie de cobro fijo en mobile.",
+      "**Don't** usar verdes de éxito ni grises fríos; la confirmación es cartón teñido con borde de tinta.",
+      "**Don't** usar caracteres Unicode o emoji como íconos (flechas, tildes, cruces); siempre SVG.",
+      "**Don't** poner etiquetas cortas en mayúsculas encima de los títulos de pantalla; el título va solo.",
+      "**Don't** reutilizar la forma del sello para otra cosa que el estado de stock."
+    ]
+  }
+}

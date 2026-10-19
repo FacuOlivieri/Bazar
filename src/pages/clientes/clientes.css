@@ -1,0 +1,27 @@
+/* Filter sits on the same control rule as the Productos tabs row. */
+.clients-filter {
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: var(--rule-control);
+}
+
+.client-surname {
+  font-weight: 700;
+}
+
+.data-table .col-dni {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.clients-idle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding-top: 24px;
+}
+
+.clients-idle .helper-text {
+  max-width: 34ch;
+}
