@@ -6,6 +6,7 @@ import com.Project.BazarV1.DTO.SaleDetailDTO;
 import com.Project.BazarV1.Exception.InvalidCouponException;
 import com.Project.BazarV1.Exception.NotEnoughStock;
 import com.Project.BazarV1.Exception.NotFoundException;
+import com.Project.BazarV1.Helpers.Calculator;
 import com.Project.BazarV1.Mapper.Mapper;
 import com.Project.BazarV1.Model.Client;
 import com.Project.BazarV1.Model.Coupon;
@@ -21,7 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -53,8 +56,6 @@ public class SaleService implements ISaleService {
         //Cupon opcional -- se valida antes de tocar stock
         Coupon cupon = buscarCuponDisponible(saleDTO.getCoupon());
 
-        //Para campo calculado
-        Double totalSalePrice = 0.0D;
        //Traemos Cliente para asignarlo a la nueva Venta
         Client clienteEncontrado = clientRepository.findById(saleDTO.getClient().getIdClientDTO()).
                 orElseThrow(() -> new NotFoundException("No se encontró el cliente de la venta"));
@@ -73,16 +74,11 @@ public class SaleService implements ISaleService {
             Product product = productRepository.findById(productoDTO.getId()).orElseThrow(() -> new NotFoundException("No se encontró un producto de la venta"));
             product.setStock(product.getStock() - productoDTO.getQuantity());
 
-            SaleDetail saleDetail = new SaleDetail();
-            saleDetail.setSale(newSale);
-            saleDetail.setProduct(product);
-
-            saleDetail.setQuantity(productoDTO.getQuantity());
-            saleDetail.setTotal(product.getPrice() * productoDTO.getQuantity());
-            totalSalePrice += saleDetail.getTotal();
-            listaDetallesAAsignar.add(saleDetail);
+            listaDetallesAAsignar.add(crearDetalle(newSale, product, product.getPrice(), productoDTO.getQuantity()));
         }
 
+        //Total calculado en el servidor a partir de los detalles
+        Double totalSalePrice = calculator.calculateSaleTotalPrice(listaDetallesAAsignar);
 
         //Si vino cupon, aplicamos el descuento y lo marcamos como usado
         if (cupon != null) {
@@ -97,6 +93,18 @@ public class SaleService implements ISaleService {
         saleRepository.save(newSale);
 
         return Mapper.toSaleDTO(newSale);
+    }
+
+    //Arma un detalle guardando nombre y precio del producto, para que la venta no cambie si despues se modifica el producto
+    private SaleDetail crearDetalle(Sale sale, Product product, Double unitPrice, Integer quantity) {
+        SaleDetail saleDetail = new SaleDetail();
+        saleDetail.setSale(sale);
+        saleDetail.setProduct(product);
+        saleDetail.setProductName(product.getName());
+        saleDetail.setUnitPrice(unitPrice);
+        saleDetail.setQuantity(quantity);
+        saleDetail.setTotal(unitPrice * quantity);
+        return saleDetail;
     }
 
     private Coupon buscarCuponDisponible(CouponDTO couponDTO) {
@@ -122,9 +130,16 @@ public class SaleService implements ISaleService {
     }
 
     @Override
+    @Transactional
     public SaleDTO updateSale(Long id, SaleDTO saleDTO) {
         Sale foundSale = saleRepository.findById(id).orElseThrow(() -> new NotFoundException("No se encontró la venta"));
         Client updatedClient = clientRepository.findById(saleDTO.getClient().getIdClientDTO()).orElseThrow(() -> new NotFoundException("No se encontró el cliente de la venta"));
+
+        //Guardamos el precio al que se vendio cada producto originalmente (id producto -> precio)
+        Map<Long, Double> preciosOriginales = new HashMap<>();
+        for (SaleDetail detalleOriginal : foundSale.getProducts()) {
+            preciosOriginales.put(detalleOriginal.getProduct().getIdProduct(), detalleOriginal.getUnitPrice());
+        }
 
         List<SaleDetailDTO> productsDTOList = saleDTO.getProducts();
         List<SaleDetail> detailsListToAsigne = new ArrayList<>();
@@ -134,21 +149,29 @@ public class SaleService implements ISaleService {
             Product product = productRepository.findById(saleDetailProducto.getId())
                     .orElseThrow(() -> new NotFoundException("No se encontró el producto " + saleDetailProducto.getProductName()));
 
-            SaleDetail saleDetail = new SaleDetail();
-            saleDetail.setSale(foundSale);
-            saleDetail.setProduct(product);
-            saleDetail.setQuantity(saleDetailProducto.getQuantity());
-            saleDetail.setTotal(product.getPrice() * saleDetailProducto.getQuantity());
-            detailsListToAsigne.add(saleDetail);
+            //Si el producto ya estaba en la venta se respeta su precio original, si es nuevo se usa el precio actual
+            Double unitPrice = preciosOriginales.get(product.getIdProduct());
+            if (unitPrice == null) {
+                unitPrice = product.getPrice();
+            }
+
+            detailsListToAsigne.add(crearDetalle(foundSale, product, unitPrice, saleDetailProducto.getQuantity()));
         }
 
-        //Asignamos al la venta a modificar los datos nuevos
+        //Total calculado en el servidor, aplicando el cupon si la venta tenia uno
+        Double totalPrice = calculator.calculateSaleTotalPrice(detailsListToAsigne);
+        if (foundSale.getCoupon() != null) {
+            totalPrice = calculator.applyDiscount(totalPrice, foundSale.getCoupon().getDiscount());
+        }
+
+
         foundSale.setDate(saleDTO.getDate());
         foundSale.setClient(updatedClient);
-        foundSale.setProducts(detailsListToAsigne);
-        foundSale.setTotalPrice(calculator.calculateSaleTotalPrice(saleDTO));
+        foundSale.getProducts().clear();
+        foundSale.getProducts().addAll(detailsListToAsigne);
+        foundSale.setTotalPrice(totalPrice);
 
-        //Persistimos y devolvemos
+
         saleRepository.save(foundSale);
         return Mapper.toSaleDTO(foundSale);
 

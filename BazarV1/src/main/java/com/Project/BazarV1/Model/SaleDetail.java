@@ -25,6 +25,12 @@ public class SaleDetail {
     @ManyToOne (fetch = FetchType.LAZY)
     @JoinColumn(name = "id_product")
     private Product product;
+
+    //Copia del nombre y precio del producto al momento de la venta,
+    //asi la venta no cambia si despues se modifica el producto
+    private String productName;
+    private Double unitPrice;
+
     private Integer quantity;
     private Double total;
 

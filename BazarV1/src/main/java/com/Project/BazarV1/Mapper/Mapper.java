@@ -68,9 +68,10 @@ public class Mapper {
         for (SaleDetail product : products) {
             SaleDetailDTO detail = SaleDetailDTO.builder()
                     .id(product.getIdSaleDetail())
-                    .productName(product.getProduct().getName())
+                    .productName(product.getProductName())
                     .quantity(product.getQuantity())
-                    .subtotal(product.getProduct().getPrice() * product.getQuantity())
+                    .unitPrice(product.getUnitPrice())
+                    .subtotal(product.getTotal())
                     .build();
                     saleDetailDTOs.add(detail);
         }

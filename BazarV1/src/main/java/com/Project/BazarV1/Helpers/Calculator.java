@@ -1,22 +1,23 @@
-package com.Project.BazarV1.Service;
+package com.Project.BazarV1.Helpers;
 
-import com.Project.BazarV1.DTO.SaleDTO;
-import com.Project.BazarV1.DTO.SaleDetailDTO;
+import com.Project.BazarV1.Model.SaleDetail;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class Calculator implements ICalculator{
 
+    //Suma los totales de los detalles calculados en el servidor (no confia en lo que manda el cliente)
     @Override
-    public Double calculateSaleTotalPrice(SaleDTO saleDTO) {
+    public Double calculateSaleTotalPrice(List<SaleDetail> details) {
         double totalPrice = 0.0;
-        for (SaleDetailDTO saleDetailProduct : saleDTO.getProducts()) {
-            totalPrice += saleDetailProduct.getSubtotal();
+        for (SaleDetail detail : details) {
+            totalPrice += detail.getTotal();
         }
         return totalPrice;
     }
 
-    //Redondea a 2 decimales para evitar valores como 1111.0500000000002
     @Override
     public Double applyDiscount(Double totalPrice, Double discountPercentage) {
         double discountedPrice = totalPrice * (1 - discountPercentage / 100);
