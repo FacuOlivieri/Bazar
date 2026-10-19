@@ -28,4 +28,9 @@ public class Sale {
     @JoinColumn(name = "id_client", referencedColumnName = "idClient")
     private Client client;
 
+    //Opcional: una venta puede no tener cupon
+    @OneToOne
+    @JoinColumn(name = "id_coupon", referencedColumnName = "idCoupon")
+    private Coupon coupon;
+
 }

@@ -11,4 +11,5 @@ import java.util.Optional;
 @Repository
 public interface ISaleRepository extends JpaRepository<Sale, Long> {
     List<Sale> findByDate(LocalDate date);
+    boolean existsByCoupon_IdCoupon(Long idCoupon);
 }

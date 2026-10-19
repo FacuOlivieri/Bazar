@@ -11,6 +11,9 @@ public class ClientDTO {
     private Long idClientDTO;
     private String name;
     private String surname;
+    private String adress;
     private String dni;
+    private Integer phone;
+    private String email;
 
 }

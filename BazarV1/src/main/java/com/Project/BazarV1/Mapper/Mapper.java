@@ -1,10 +1,12 @@
 package com.Project.BazarV1.Mapper;
 
 import com.Project.BazarV1.DTO.ClientDTO;
+import com.Project.BazarV1.DTO.CouponDTO;
 import com.Project.BazarV1.DTO.ProductDTO;
 import com.Project.BazarV1.DTO.SaleDTO;
 import com.Project.BazarV1.DTO.SaleDetailDTO;
 import com.Project.BazarV1.Model.Client;
+import com.Project.BazarV1.Model.Coupon;
 import com.Project.BazarV1.Model.Product;
 import com.Project.BazarV1.Model.Sale;
 import com.Project.BazarV1.Model.SaleDetail;
@@ -20,7 +22,19 @@ public class Mapper {
                 .idClientDTO(client.getIdClient())
                 .name(client.getName())
                 .surname(client.getSurname())
+                .adress(client.getAdress())
+                .phone(client.getPhone())
+                .email(client.getEmail())
                 .dni(client.getDni())
+                .build();
+    }
+
+    public static CouponDTO toCouponDTO(Coupon coupon) {
+        return CouponDTO.builder()
+                .idCoupon(coupon.getIdCoupon())
+                .identifier(coupon.getIdentifier())
+                .discount(coupon.getDiscount())
+                .used(coupon.getUsed())
                 .build();
     }
 

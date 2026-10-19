@@ -26,6 +26,8 @@ public class ClientService implements IClientService {
                .idClient(clientDTO.getIdClientDTO())
                .name(clientDTO.getName())
                .surname(clientDTO.getSurname())
+               .phone(clientDTO.getPhone())
+               .email(clientDTO.getEmail())
                .dni(clientDTO.getDni())
                .build();
 
