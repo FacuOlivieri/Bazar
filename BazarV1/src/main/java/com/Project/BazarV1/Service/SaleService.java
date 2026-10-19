@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -58,7 +57,7 @@ public class SaleService implements ISaleService {
         Double totalSalePrice = 0.0D;
        //Traemos Cliente para asignarlo a la nueva Venta
         Client clienteEncontrado = clientRepository.findById(saleDTO.getClient().getIdClientDTO()).
-                orElseThrow(() -> new NotFoundException("Client not Found to add to the sale"));
+                orElseThrow(() -> new NotFoundException("No se encontró el cliente de la venta"));
 
 
         //Creamos Venta
@@ -71,7 +70,7 @@ public class SaleService implements ISaleService {
         List<SaleDetail> listaDetallesAAsignar = new ArrayList<>();
 
         for (SaleDetailDTO productoDTO : listaDeProductosDTO) {
-            Product product = productRepository.findById(productoDTO.getId()).orElseThrow(() -> new NotFoundException("Product not Found to add to sale"));
+            Product product = productRepository.findById(productoDTO.getId()).orElseThrow(() -> new NotFoundException("No se encontró un producto de la venta"));
             product.setStock(product.getStock() - productoDTO.getQuantity());
 
             SaleDetail saleDetail = new SaleDetail();
@@ -106,9 +105,9 @@ public class SaleService implements ISaleService {
         }
         String identifier = couponDTO.getIdentifier().trim();
         Coupon cupon = couponRepository.findByIdentifier(identifier)
-                .orElseThrow(() -> new NotFoundException("Coupon not found: " + identifier));
+                .orElseThrow(() -> new NotFoundException("No se encontró el cupón " + identifier));
         if (cupon.getUsed()) {
-            throw new InvalidCouponException("El cupon " + identifier + " ya fue usado");
+            throw new InvalidCouponException("El cupón " + identifier + " ya fue usado");
         }
         return cupon;
     }
@@ -117,15 +116,15 @@ public class SaleService implements ISaleService {
         for (SaleDetailDTO productoPasado : listaDeProductosDTO) {
             Optional<Product> productoEnStock = productRepository.findById(productoPasado.getId());
             if (productoEnStock.isPresent() && productoPasado.getQuantity() > productoEnStock.get().getStock()) {
-                throw new NotEnoughStock("La cantidad no puede ser menor que el stock presente. STOCK PRESENTE = " + productoPasado.getQuantity());
+                throw new NotEnoughStock("No alcanza el stock de " + productoEnStock.get().getName() + ": quedan " + productoEnStock.get().getStock());
             }
         }
     }
 
     @Override
     public SaleDTO updateSale(Long id, SaleDTO saleDTO) {
-        Sale foundSale = saleRepository.findById(id).orElseThrow(() -> new NotFoundException("Sale not found"));
-        Client updatedClient = clientRepository.findById(saleDTO.getClient().getIdClientDTO()).orElseThrow(() -> new NotFoundException("Client not Found to add to the sale"));
+        Sale foundSale = saleRepository.findById(id).orElseThrow(() -> new NotFoundException("No se encontró la venta"));
+        Client updatedClient = clientRepository.findById(saleDTO.getClient().getIdClientDTO()).orElseThrow(() -> new NotFoundException("No se encontró el cliente de la venta"));
 
         List<SaleDetailDTO> productsDTOList = saleDTO.getProducts();
         List<SaleDetail> detailsListToAsigne = new ArrayList<>();
@@ -133,7 +132,7 @@ public class SaleService implements ISaleService {
         //Crea objeto Producto por cada producto pasado por el body de request, creamos cada SaleDetail y agregamos a su correspondiente lista a asignar
         for (SaleDetailDTO saleDetailProducto : productsDTOList) {
             Product product = productRepository.findById(saleDetailProducto.getId())
-                    .orElseThrow(() -> new NotFoundException("Producto not found: " + saleDetailProducto.getProductName()));
+                    .orElseThrow(() -> new NotFoundException("No se encontró el producto " + saleDetailProducto.getProductName()));
 
             SaleDetail saleDetail = new SaleDetail();
             saleDetail.setSale(foundSale);
@@ -167,12 +166,12 @@ public class SaleService implements ISaleService {
 
     @Override
     public SaleDTO findSale(Long id) {
-        return Mapper.toSaleDTO(saleRepository.findById(id).orElseThrow(() -> new NotFoundException("Sale not found")));
+        return Mapper.toSaleDTO(saleRepository.findById(id).orElseThrow(() -> new NotFoundException("No se encontró la venta")));
     }
 
     @Override
     public void deleteSale(Long id) {
-        Sale sale = saleRepository.findById(id).orElseThrow(() -> new NotFoundException("Sale not found"));
+        Sale sale = saleRepository.findById(id).orElseThrow(() -> new NotFoundException("No se encontró la venta"));
         saleRepository.delete(sale);
     }
 

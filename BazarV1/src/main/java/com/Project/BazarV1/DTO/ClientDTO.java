@@ -11,12 +11,12 @@ public class ClientDTO {
 
     private Long idClientDTO;
 
-    @NotBlank
+    @NotBlank(message = "El nombre es obligatorio")
     private String name;
-    @NotBlank
+    @NotBlank(message = "El apellido es obligatorio")
     private String surname;
     private String adress;
-    @NotBlank
+    @NotBlank(message = "El DNI es obligatorio")
     private String dni;
     private String phone;
     private String email;

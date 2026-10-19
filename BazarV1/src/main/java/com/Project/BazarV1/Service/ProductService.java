@@ -31,19 +31,19 @@ public class ProductService implements IProductService {
     public ProductDTO createProduct(ProductDTO productDTO) {
 
         if (productDTO.getName() == null || productDTO.getName().isBlank())
-            throw new IllegalArgumentException("Product name cannot be empty");
+            throw new IllegalArgumentException("El nombre del producto es obligatorio");
 
         if (productDTO.getBrand() == null || productDTO.getBrand().isBlank())
-            throw new IllegalArgumentException("Product brand cannot be empty");
+            throw new IllegalArgumentException("La marca del producto es obligatoria");
 
         if (productDTO.getPrice() == null || productDTO.getPrice() <= 0)
-            throw new IllegalArgumentException("Product price must be greater than 0");
+            throw new IllegalArgumentException("El precio del producto debe ser mayor a 0");
 
         if (productDTO.getQuantity() == null || productDTO.getQuantity() < 0)
-            throw new IllegalArgumentException("Product quantity cannot be negative");
+            throw new IllegalArgumentException("La cantidad del producto no puede ser negativa");
 
         if (productDTO.getStock() == null || productDTO.getStock() < 0)
-            throw new IllegalArgumentException("Product stock cannot be negative");
+            throw new IllegalArgumentException("El stock del producto no puede ser negativo");
 
         Product newProduct = Product.builder()
                 .idProduct(productDTO.getIdProduct())
@@ -61,19 +61,19 @@ public class ProductService implements IProductService {
     public ProductDTO updateProduct(Long id, ProductDTO productDTO) {
 
         if (id == null || id <= 0)
-            throw new InvalidProductException("Product id is not valid");
+            throw new InvalidProductException("El id del producto no es válido");
 
         if (productDTO.getPrice() != null && productDTO.getPrice() <= 0)
-            throw new IllegalArgumentException("Product price must be greater than 0");
+            throw new IllegalArgumentException("El precio del producto debe ser mayor a 0");
 
         if (productDTO.getQuantity() != null && productDTO.getQuantity() < 0)
-            throw new IllegalArgumentException("Product quantity cannot be negative");
+            throw new IllegalArgumentException("La cantidad del producto no puede ser negativa");
 
         if (productDTO.getStock() != null && productDTO.getStock() < 0)
-            throw new IllegalArgumentException("Product stock cannot be negative");
+            throw new IllegalArgumentException("El stock del producto no puede ser negativo");
 
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Product not found"));
+                .orElseThrow(() -> new NotFoundException("No se encontró el producto"));
 
         product.setName(productDTO.getName());
         product.setBrand(productDTO.getBrand());
@@ -98,20 +98,20 @@ public class ProductService implements IProductService {
     public ProductDTO findProduct(Long id) {
 
         if (id == null || id <= 0)
-            throw new InvalidProductException("Product id is not valid");
+            throw new InvalidProductException("El id del producto no es válido");
 
         return Mapper.toProductDTO(productRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Product with id: " + id + " not found")));
+                .orElseThrow(() -> new NotFoundException("No se encontró el producto con id " + id)));
     }
 
     @Override
     public void deleteProduct(Long id) {
 
         if (id == null || id <= 0)
-            throw new InvalidProductException("Product id is not valid");
+            throw new InvalidProductException("El id del producto no es válido");
 
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Product not found"));
+                .orElseThrow(() -> new NotFoundException("No se encontró el producto"));
 
         productRepository.delete(product);
     }
@@ -130,7 +130,7 @@ public class ProductService implements IProductService {
 
     @Override
     public List<ProductDTO> findProductsFromSpecificSale(Long idSale) {
-        Sale specificSale = saleRepository.findById(idSale).orElseThrow(() -> new NotFoundException("Sale not found"));
+        Sale specificSale = saleRepository.findById(idSale).orElseThrow(() -> new NotFoundException("No se encontró la venta"));
         List<SaleDetail> detailProducts = specificSale.getProducts();
         List<Product> products = new ArrayList<>();
 

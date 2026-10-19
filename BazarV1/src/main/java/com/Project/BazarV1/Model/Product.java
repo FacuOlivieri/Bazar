@@ -1,7 +1,7 @@
 package com.Project.BazarV1.Model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,7 +26,7 @@ public class Product {
 
     @Column(nullable = false)
     private Double price;
-    @Positive
+    @PositiveOrZero(message = "La cantidad del producto debe ser mayor a 0")
     private Integer quantity;
     private Integer stock;
 

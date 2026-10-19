@@ -31,7 +31,7 @@ public class CouponService implements ICouponService {
     public CouponDTO createCoupon(CouponDTO couponDTO) {
         String identifier = validateIdentifier(couponDTO.getIdentifier());
         if (couponRepository.existsByIdentifier(identifier)) {
-            throw new InvalidCouponException("Ya existe un cupon con el identificador " + identifier);
+            throw new InvalidCouponException("Ya existe un cupón con el identificador " + identifier);
         }
 
         //Todo cupon nuevo arranca sin usar
@@ -47,11 +47,11 @@ public class CouponService implements ICouponService {
     @Override
     @Transactional
     public CouponDTO updateCoupon(Long id, CouponDTO couponDTO) {
-        Coupon coupon = couponRepository.findById(id).orElseThrow(() -> new NotFoundException("Coupon not found"));
+        Coupon coupon = couponRepository.findById(id).orElseThrow(() -> new NotFoundException("No se encontró el cupón"));
 
         String identifier = validateIdentifier(couponDTO.getIdentifier());
         if (couponRepository.existsByIdentifierAndIdCouponNot(identifier, id)) {
-            throw new InvalidCouponException("Ya existe un cupon con el identificador " + identifier);
+            throw new InvalidCouponException("Ya existe un cupón con el identificador " + identifier);
         }
 
         coupon.setIdentifier(identifier);
@@ -87,7 +87,7 @@ public class CouponService implements ICouponService {
     @Transactional(readOnly = true)
     public CouponDTO findCoupon(Long id) {
         Coupon coupon = couponRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Cannot find coupon with id " + id));
+                .orElseThrow(() -> new NotFoundException("No se encontró el cupón con id " + id));
 
         return Mapper.toCouponDTO(coupon);
     }
@@ -95,18 +95,18 @@ public class CouponService implements ICouponService {
     @Override
     @Transactional
     public void deleteCoupon(Long id) {
-        Coupon coupon = couponRepository.findById(id).orElseThrow(() -> new NotFoundException("Cannot find coupon with id " + id));
+        Coupon coupon = couponRepository.findById(id).orElseThrow(() -> new NotFoundException("No se encontró el cupón con id " + id));
 
         //Si una venta lo usa, borrarlo romperia la FK de la venta
         if (saleRepository.existsByCoupon_IdCoupon(id)) {
-            throw new InvalidCouponException("No se puede eliminar el cupon " + coupon.getIdentifier() + " porque esta asociado a una venta");
+            throw new InvalidCouponException("No se puede eliminar el cupón " + coupon.getIdentifier() + " porque está asociado a una venta");
         }
         couponRepository.delete(coupon);
     }
 
     private String validateIdentifier(String identifier) {
         if (identifier == null || identifier.isBlank()) {
-            throw new InvalidCouponException("El identificador del cupon es obligatorio");
+            throw new InvalidCouponException("El identificador del cupón es obligatorio");
         }
         return identifier.trim();
     }

@@ -44,7 +44,7 @@ public class ClientService implements IClientService {
 
     @Override
     public ClientDTO updateClient(Long id, ClientDTO clientDTO) {
-        Client client = clientRepository.findById(id).orElseThrow( () -> new NotFoundException("Client not found"));
+        Client client = clientRepository.findById(id).orElseThrow( () -> new NotFoundException("No se encontró el cliente"));
         client.setName(clientDTO.getName());
         client.setSurname(clientDTO.getSurname());
         client.setDni(clientDTO.getDni());
@@ -67,7 +67,7 @@ public class ClientService implements IClientService {
     @Override
     public ClientDTO findClient(Long id) {
         Client client = clientRepository.findById(id)
-                .orElseThrow( () -> new NotFoundException("Cannot find client with id !"));
+                .orElseThrow( () -> new NotFoundException("No se encontró el cliente con id " + id));
 
        return Mapper.toClientDTO(client);
 
@@ -75,7 +75,7 @@ public class ClientService implements IClientService {
 
     @Override
     public void deleteClient(Long id) {
-        Client client = clientRepository.findById(id).orElseThrow( () -> new NotFoundException("Cannot find client with id !"));
+        Client client = clientRepository.findById(id).orElseThrow( () -> new NotFoundException("No se encontró el cliente con id " + id));
         clientRepository.delete(client);
     }
 
