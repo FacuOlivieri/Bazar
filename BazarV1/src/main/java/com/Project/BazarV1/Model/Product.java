@@ -1,9 +1,6 @@
 package com.Project.BazarV1.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,8 +17,14 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idProduct;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private String brand;
+
+    @Column(nullable = false)
     private Double price;
     @Positive
     private Integer quantity;

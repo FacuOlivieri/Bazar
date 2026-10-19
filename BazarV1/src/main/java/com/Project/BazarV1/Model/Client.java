@@ -20,9 +20,16 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idClient;
+
+    @Column (nullable = false)
     private String name;
+
+    @Column (nullable = false)
     private String surname;
+
+    @Column(unique = true, nullable = false)
     private String dni;
+
     private String adress;
     private String email;
     private String phone;
