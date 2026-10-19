@@ -1,18 +1,23 @@
 package com.Project.BazarV1.Service;
 
+import com.Project.BazarV1.DTO.CouponDTO;
 import com.Project.BazarV1.DTO.SaleDTO;
 import com.Project.BazarV1.DTO.SaleDetailDTO;
+import com.Project.BazarV1.Exception.InvalidCouponException;
 import com.Project.BazarV1.Exception.NotEnoughStock;
 import com.Project.BazarV1.Exception.NotFoundException;
 import com.Project.BazarV1.Mapper.Mapper;
 import com.Project.BazarV1.Model.Client;
+import com.Project.BazarV1.Model.Coupon;
 import com.Project.BazarV1.Model.Product;
 import com.Project.BazarV1.Model.Sale;
 import com.Project.BazarV1.Model.SaleDetail;
 import com.Project.BazarV1.Repository.IClientRepository;
+import com.Project.BazarV1.Repository.ICouponRepository;
 import com.Project.BazarV1.Repository.IProductRepository;
 import com.Project.BazarV1.Repository.ISaleRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -27,21 +32,27 @@ public class SaleService implements ISaleService {
     private final ISaleRepository saleRepository;
     private final IClientRepository clientRepository;
     private final IProductRepository productRepository;
+    private final ICouponRepository couponRepository;
     private final Calculator calculator;
 
-    public SaleService(ISaleRepository saleRepository,  IClientRepository clientRepository, IProductRepository productRepository, Calculator calculator) {
+    public SaleService(ISaleRepository saleRepository,  IClientRepository clientRepository, IProductRepository productRepository, ICouponRepository couponRepository, Calculator calculator) {
         this.saleRepository = saleRepository;
         this.clientRepository = clientRepository;
         this.productRepository = productRepository;
+        this.couponRepository = couponRepository;
         this.calculator = calculator;
     }
 
     @Override
+    @Transactional
     public SaleDTO createSale(SaleDTO saleDTO) {
 
         //Lista de productos pasados -- Verificacion de Stock
         List<SaleDetailDTO> listaDeProductosDTO = saleDTO.getProducts();
         validacionStockProductos(listaDeProductosDTO);
+
+        //Cupon opcional -- se valida antes de tocar stock
+        Coupon cupon = buscarCuponDisponible(saleDTO.getCoupon());
 
         //Para campo calculado
         Double totalSalePrice = 0.0D;
@@ -74,12 +85,32 @@ public class SaleService implements ISaleService {
         }
 
 
+        //Si vino cupon, aplicamos el descuento y lo marcamos como usado
+        if (cupon != null) {
+            totalSalePrice = calculator.applyDiscount(totalSalePrice, cupon.getDiscount());
+            cupon.setUsed(true);
+            newSale.setCoupon(cupon);
+        }
+
         //Asignamos lista de detalles creadas a la venta, el campo calculado del precio y la persistimos
         newSale.setProducts(listaDetallesAAsignar);
         newSale.setTotalPrice(totalSalePrice);
         saleRepository.save(newSale);
 
         return Mapper.toSaleDTO(newSale);
+    }
+
+    private Coupon buscarCuponDisponible(CouponDTO couponDTO) {
+        if (couponDTO == null || couponDTO.getIdentifier() == null || couponDTO.getIdentifier().isBlank()) {
+            return null;
+        }
+        String identifier = couponDTO.getIdentifier().trim();
+        Coupon cupon = couponRepository.findByIdentifier(identifier)
+                .orElseThrow(() -> new NotFoundException("Coupon not found: " + identifier));
+        if (cupon.getUsed()) {
+            throw new InvalidCouponException("El cupon " + identifier + " ya fue usado");
+        }
+        return cupon;
     }
 
     private void validacionStockProductos(List<SaleDetailDTO> listaDeProductosDTO) {

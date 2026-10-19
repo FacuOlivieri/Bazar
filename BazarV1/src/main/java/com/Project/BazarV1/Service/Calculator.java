@@ -15,4 +15,11 @@ public class Calculator implements ICalculator{
         }
         return totalPrice;
     }
+
+    //Redondea a 2 decimales para evitar valores como 1111.0500000000002
+    @Override
+    public Double applyDiscount(Double totalPrice, Double discountPercentage) {
+        double discountedPrice = totalPrice * (1 - discountPercentage / 100);
+        return Math.round(discountedPrice * 100) / 100.0;
+    }
 }

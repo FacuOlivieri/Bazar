@@ -18,4 +18,6 @@ public class SaleDTO {
     private ClientDTO client;
     private List<SaleDetailDTO> products;
     private Double totalPrice;
+    //Opcional: al crear la venta alcanza con pasar el identifier
+    private CouponDTO coupon;
 }

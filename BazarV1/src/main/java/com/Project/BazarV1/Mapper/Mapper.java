@@ -58,6 +58,7 @@ public class Mapper {
                 .client(toClientDTO(sale.getClient()))
                 .products(toSaleDetailDTO(sale.getProducts()))
                 .totalPrice(sale.getTotalPrice())
+                .coupon(sale.getCoupon() != null ? toCouponDTO(sale.getCoupon()) : null)
                 .build();
 
     }
