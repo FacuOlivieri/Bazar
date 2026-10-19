@@ -4,7 +4,7 @@ import { clientFullName } from '../../domain/client';
 import { buildSaleRequest } from '../../domain/sale';
 
 const COUPON_USED = /ya fue usado/i;
-const COUPON_MISSING = /coupon not found/i;
+const COUPON_MISSING = /no se encontró el cupón|coupon not found/i;
 
 function describeChargeError(error) {
   if (error.status === 0) return error.message;

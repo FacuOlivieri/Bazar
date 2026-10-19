@@ -8,9 +8,21 @@ export class ApiError extends Error {
   }
 }
 
+// Bean Validation failures arrive as Hibernate's dump; the readable part is each interpolatedMessage.
+const VALIDATION_DUMP = /interpolatedMessage='([^']*)'/g;
+// Database and framework errors are written for developers, not for the counter.
+const TECHNICAL_MESSAGE = /exception|sql|could not|constraint|statement|\n/i;
+
+// The backend sends business errors as 500 with a Spanish `message`. Spring's `error` field
+// ("Internal Server Error") and technical messages never reach the screen: those fall back to the bare status.
 async function readErrorMessage(response) {
+  const bareStatus = `El servidor respondió ${response.status}`;
   const data = await response.json().catch(() => null);
-  return data?.message || data?.error || `El servidor respondió ${response.status}`;
+  const message = data?.message ?? '';
+  const violations = [...message.matchAll(VALIDATION_DUMP)].map((match) => match[1]);
+  if (violations.length > 0) return violations.join('. ');
+  if (!message || TECHNICAL_MESSAGE.test(message)) return bareStatus;
+  return message;
 }
 
 async function request(path, { method = 'GET', body } = {}) {
