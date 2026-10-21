@@ -4,13 +4,16 @@ package com.Project.BazarV1.Controller;
 import com.Project.BazarV1.DTO.ClientDTO;
 import com.Project.BazarV1.Service.ClientService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
 
+//ADMIN y EMPLEADO por defecto; los metodos con su propio @PreAuthorize lo reemplazan
 @RestController
 @RequestMapping ("api/v1/clients")
+@PreAuthorize("hasAnyRole('ADMIN', 'EMPLEADO')")
 public class ClientController {
 
     public final ClientService clientService;
@@ -42,6 +45,7 @@ public class ClientController {
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ClientDTO> deleteClient(@PathVariable Long id) {
         clientService.deleteClient(id);
         return ResponseEntity.noContent().build();
