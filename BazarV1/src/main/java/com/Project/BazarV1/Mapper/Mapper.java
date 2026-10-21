@@ -2,17 +2,24 @@ package com.Project.BazarV1.Mapper;
 
 import com.Project.BazarV1.DTO.ClientDTO;
 import com.Project.BazarV1.DTO.CouponDTO;
+import com.Project.BazarV1.DTO.PermissionDTO;
 import com.Project.BazarV1.DTO.ProductDTO;
+import com.Project.BazarV1.DTO.RoleDTO;
 import com.Project.BazarV1.DTO.SaleDTO;
 import com.Project.BazarV1.DTO.SaleDetailDTO;
+import com.Project.BazarV1.DTO.UserDTO;
 import com.Project.BazarV1.Model.Client;
 import com.Project.BazarV1.Model.Coupon;
+import com.Project.BazarV1.Model.Permission;
 import com.Project.BazarV1.Model.Product;
+import com.Project.BazarV1.Model.Role;
 import com.Project.BazarV1.Model.Sale;
 import com.Project.BazarV1.Model.SaleDetail;
+import com.Project.BazarV1.Model.UserSec;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Mapper {
 
@@ -61,6 +68,38 @@ public class Mapper {
                 .coupon(sale.getCoupon() != null ? toCouponDTO(sale.getCoupon()) : null)
                 .build();
 
+    }
+
+    public static PermissionDTO toPermissionDTO(Permission permission) {
+        return PermissionDTO.builder()
+                .idPermission(permission.getIdPermission())
+                .permissionName(permission.getPermissionName())
+                .build();
+    }
+
+    public static RoleDTO toRoleDTO(Role role) {
+        return RoleDTO.builder()
+                .idRole(role.getIdRole())
+                .role(role.getRole())
+                .permissions(role.getPermissionsList().stream()
+                        .map(Permission::getPermissionName)
+                        .collect(Collectors.toSet()))
+                .build();
+    }
+
+    //La password no se mapea: nunca sale del service
+    public static UserDTO toUserDTO(UserSec user) {
+        return UserDTO.builder()
+                .idUser(user.getIdUser())
+                .username(user.getUsername())
+                .enabled(user.isEnabled())
+                .accountNotExpired(user.isAccountNotExpired())
+                .accountNotLocked(user.isAccountNotLocked())
+                .credentialNotExpired(user.isCredentialNotExpired())
+                .roles(user.getRolesList().stream()
+                        .map(Role::getRole)
+                        .collect(Collectors.toSet()))
+                .build();
     }
 
     private static List<SaleDetailDTO> toSaleDetailDTO(List<SaleDetail> products) {

@@ -10,4 +10,7 @@ import java.util.Optional;
 public interface IUserRepository extends JpaRepository<UserSec, Long> {
 
     Optional<UserSec> findByUsername(String username);
+    boolean existsByUsername(String username);
+    boolean existsByUsernameAndIdUserNot(String username, Long idUser);
+    boolean existsByRolesList_IdRole(Long idRole);
 }
