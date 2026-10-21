@@ -3,6 +3,7 @@ import { groupByBrand } from '../../domain/product';
 import { LOW_STOCK_QUANTITY } from '../../domain/stock';
 
 // Idle side panel: what to restock, grouped by brand like an order sheet for the supplier.
+// Without `onEdit` (only ADMIN updates stock) it is a read-only list.
 export function SupplierOrder({ lowStockProducts, onEdit }) {
   if (lowStockProducts.length === 0) {
     return (
@@ -25,14 +26,20 @@ export function SupplierOrder({ lowStockProducts, onEdit }) {
                   N.º {formatNumber(product.idProduct)} · quedan {formatQuantity(product.stock)} u.
                 </p>
               </div>
-              <button type="button" className="link-btn" onClick={() => onEdit(product)} aria-label={`Editar ${product.name}`}>
-                Editar
-              </button>
+              {onEdit && (
+                <button type="button" className="link-btn" onClick={() => onEdit(product)} aria-label={`Editar ${product.name}`}>
+                  Editar
+                </button>
+              )}
             </div>
           ))}
         </section>
       ))}
-      <p className="helper-text supplier-order__hint">Tocá «Editar» para actualizar el stock cuando llegue la mercadería.</p>
+      <p className="helper-text supplier-order__hint">
+        {onEdit
+          ? 'Tocá «Editar» para actualizar el stock cuando llegue la mercadería.'
+          : 'Cuando llegue la mercadería, un administrador actualiza el stock.'}
+      </p>
     </div>
   );
 }

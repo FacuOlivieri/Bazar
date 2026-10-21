@@ -54,6 +54,21 @@ Lista viva para ir mejorando las dos partes de a poco. El diseño actual usa **s
 - [ ] Validar DNI en el back (obligatorio, solo números, sin repetidos).
 - [x] Base persistente: MySQL (XAMPP). H2 queda comentado en `application.properties`.
 
+### Seguridad (Spring Security + JWT, commits `df3b9d8`, `99b129f` y `550b3fd`)
+- [x] `POST /auth/login` devuelve `{ username, msg, token }`; el front ya lo usa (proxy de Vite en `/auth`).
+- [x] `UserController`, `RoleController` y `PermissionController` (`550b3fd`): las rutas (`GET`, `POST /create`, `PUT /{id}`, `DELETE /{id}` sobre `/api/v1/{users|roles|permissions}`) y los DTOs coinciden con lo que manda el front.
+- [x] `@PreAuthorize` por rol. El front oculta lo que el back rechazaría con 403:
+  - Solo ADMIN: usuarios, roles y permisos; crear, editar y borrar productos; borrar clientes; resumen del día (`/sales/summary`); editar y borrar ventas.
+  - ADMIN y EMPLEADO: ver productos, clientes y ventas, cargar y editar clientes, registrar ventas.
+  - Cupones: cualquier usuario logueado (no tiene `@PreAuthorize`).
+- [ ] Los permisos (`VER_VENTAS`, etc.) todavía no se usan en ningún `@PreAuthorize`: las pantallas se abren por rol. Un rol con otro nombre (por ejemplo `CAJERO`) se guarda, pero solo deja entrar a Cupones. El front lo avisa al crear el rol.
+- [ ] ¿`CouponController` debería tener `@PreAuthorize`? Hoy un EMPLEADO puede crear y borrar cupones.
+- [ ] **No hay usuario inicial:** para crear usuarios hay que estar logueado. Hace falta un seed (`CommandLineRunner`) con los roles `ADMIN` y `EMPLEADO` y un usuario admin con la contraseña en BCrypt.
+- [ ] Un login fallido responde 401 sin cuerpo, sea contraseña incorrecta, cuenta deshabilitada o bloqueada. El front muestra «Usuario o contraseña incorrectos». Si el back devolviera el motivo (por ejemplo `{ message: "User is disabled" }`), el front ya lo traduce en `domain/session.js`.
+- [ ] Los errores de negocio de usuarios, roles y permisos (`InvalidUserException`, etc.) responden 500. Deberían ser 409, y `NotFoundException` debería ser 404.
+- [ ] Las authorities viajan dentro del token: un cambio de roles se aplica recién cuando el usuario vuelve a entrar (como máximo 30 minutos después). El front lo avisa en los formularios.
+- [ ] CORS: con el proxy de Vite no hace falta en desarrollo. Para producción, `http.cors(...)` en `SecurityConfig` o servir el front desde el mismo dominio.
+
 ## Front (React + Vite)
 
 ### Para arrancar
@@ -75,6 +90,14 @@ Lista viva para ir mejorando las dos partes de a poco. El diseño actual usa **s
 - [x] Pantalla Cupones (F6): disponibles / usados / todos, alta, edición (incluye marcar como usado) y borrado.
 - [x] Cupón opcional en el ticket: se valida contra `/coupons/unused`, muestra subtotal, descuento y total con el mismo redondeo que el back.
 - [x] Clientes: teléfono, email y dirección en el formulario; teléfono y email en la tabla; búsqueda también por teléfono y email.
+
+### Login y administración (hecho, probado con datos simulados)
+- [x] Pantalla de ingreso (`/login`). El token se guarda en `localStorage` y viaja como `Authorization: Bearer` en cada llamada. La sesión se cierra sola al vencer el token (30 min) o ante un 401, y vuelve al login con el aviso «Tu sesión venció».
+- [x] Todas las pantallas piden sesión. Usuarios, Roles y Permisos son solo para `ROLE_ADMIN` y van en un grupo «Administración» del riel, sin atajo F.
+- [x] El riel muestra el usuario, sus roles y «Cerrar sesión».
+- [x] CRUD de Usuarios (pestañas Activos / Inactivos / Todos, roles, estado de la cuenta), Roles (permisos con lista de checkboxes) y Permisos. Bloquea en el front lo mismo que el back: borrar tu propio usuario, un rol asignado o un permiso en uso.
+- [x] Acciones por rol: un EMPLEADO no ve «Nuevo producto», ni Editar o Eliminar en Productos y en el pedido al proveedor, ni Eliminar en Clientes. Tampoco se pide la caja del día: el riel del Mostrador dice que la ve un administrador.
+- [ ] Probar contra el back real cuando haya un usuario admin.
 
 ### Próximas pantallas
 - [x] Clientes (CRUD sobre `/api/v1/clients`), atajo F4.

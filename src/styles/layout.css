@@ -36,12 +36,60 @@
   gap: var(--space-hair);
 }
 
-.rail__footer {
+.rail__group-label {
+  margin: 18px 0 2px;
+  padding: 0 12px;
+  font: 700 12px var(--font-condensed);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-kraft-ink);
+}
+
+/* Day summary and the logged-in user, pushed to the bottom of the rail. */
+.rail__bottom {
   margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 24px;
+}
+
+.rail__footer {
   padding-top: 24px;
   border-top: var(--rule-control);
   font-size: 14px;
   color: var(--color-kraft-ink);
+}
+
+.rail__account {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding-top: 16px;
+  border-top: var(--rule-control);
+  color: var(--color-kraft-ink);
+}
+
+.rail__account-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font: 700 16px var(--font-condensed);
+  letter-spacing: 0.04em;
+  color: var(--color-ink);
+  overflow-wrap: anywhere;
+}
+
+.rail__account-roles {
+  font: 600 13px var(--font-condensed);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.rail__logout {
+  margin-top: 4px;
+  padding-left: 0;
 }
 
 .rail__footer-title {
@@ -140,13 +188,34 @@
 
   .rail__subtitle,
   .rail__footer,
+  .rail__group-label,
+  .rail__account-name,
+  .rail__account-roles,
   .nav-link__kbd {
     display: none;
   }
 
   .rail__nav {
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
     margin-left: auto;
+  }
+
+  /* On the top bar only «Cerrar sesión» stays, after the sections. */
+  .rail__bottom {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .rail__account {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .rail__logout {
+    margin-top: 0;
+    padding-left: 8px;
   }
 
   .work {
@@ -172,12 +241,19 @@
     row-gap: 8px;
   }
 
-  /* Five sections don't fit on one row of a phone: two rows of equal cells. */
+  /* Five sections (eight for an admin) don't fit on one row of a phone: rows of equal cells. */
   .rail__nav {
+    order: 2;
     flex-basis: 100%;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     margin-left: 0;
+  }
+
+  /* «Cerrar sesión» stays on the brand's row. */
+  .rail__bottom {
+    order: 1;
+    margin-left: auto;
   }
 
   .rail__nav .nav-link {

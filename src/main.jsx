@@ -18,11 +18,14 @@ import './styles/layout.css';
 import './styles/components.css';
 
 import { App } from './App';
+import { AuthProvider } from './components/auth/AuthProvider';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </BrowserRouter>
   </StrictMode>
 );

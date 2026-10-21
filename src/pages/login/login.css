@@ -1,0 +1,64 @@
+/* Login: a single sheet on paper, kraft spine on the left like the rail it leads to. */
+.login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px var(--space-gutter);
+  background: var(--color-paper);
+  border-left: 18px solid var(--color-kraft);
+}
+
+.login__box {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.login__brand {
+  font: 800 56px/1 var(--font-stencil);
+  letter-spacing: 0.04em;
+}
+
+.login__sheet {
+  background: var(--color-sheet);
+  border: var(--rule-structure);
+}
+
+.login__submit {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.login__help {
+  max-width: 40ch;
+}
+
+.password-input {
+  position: relative;
+}
+
+.password-input .input {
+  padding-right: 52px;
+}
+
+.password-input__toggle {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+}
+
+@media (max-width: 480px) {
+  .login {
+    align-items: flex-start;
+    border-left: 0;
+    border-top: 12px solid var(--color-kraft);
+  }
+
+  .login__brand {
+    font-size: 42px;
+  }
+}

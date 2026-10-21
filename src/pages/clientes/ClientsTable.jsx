@@ -19,7 +19,12 @@ function ClientRow({ client, isSelected, onEdit, onDelete, isBusy }) {
       <td className="col-email">{client.email || MISSING}</td>
       <td className="col-address">{client.adress || MISSING}</td>
       <td className="col-action">
-        <RowActions recordName={clientFullName(client)} onEdit={() => onEdit(client)} onDelete={() => onDelete(client)} isBusy={isBusy} />
+        <RowActions
+          recordName={clientFullName(client)}
+          onEdit={() => onEdit(client)}
+          onDelete={onDelete && (() => onDelete(client))}
+          isBusy={isBusy}
+        />
       </td>
     </tr>
   );

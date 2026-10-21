@@ -4,6 +4,7 @@ import { SearchField } from '../../components/ui/SearchField';
 import { applyDiscount } from '../../domain/coupon';
 import { formatPrice, formatToday, pluralize } from '../../domain/format';
 import { matchesProduct } from '../../domain/product';
+import { useIsAdmin } from '../../hooks/useAuth';
 import { useClients } from '../../hooks/useClients';
 import { useUnusedCoupons } from '../../hooks/useCoupons';
 import { useDaySummary } from '../../hooks/useDaySummary';
@@ -15,21 +16,26 @@ import { Ticket } from './Ticket';
 import { useCharge } from './useCharge';
 import './mostrador.css';
 
-function DaySummary({ salesCount, salesAmount }) {
+function DaySummary({ isAvailable, salesCount, salesAmount }) {
   return (
     <>
       <p className="rail__footer-title">Hoy · {formatToday()}</p>
-      <p className="num">
-        {pluralize(salesCount, 'venta', 'ventas')} · {formatPrice(salesAmount)}
-      </p>
+      {isAvailable ? (
+        <p className="num">
+          {pluralize(salesCount, 'venta', 'ventas')} · {formatPrice(salesAmount)}
+        </p>
+      ) : (
+        <p>La caja del día la ve un administrador.</p>
+      )}
     </>
   );
 }
 
 export function MostradorPage() {
+  const isAdmin = useIsAdmin();
   const products = useProducts();
   const { clients, clientsById } = useClients();
-  const daySummary = useDaySummary();
+  const daySummary = useDaySummary({ enabled: isAdmin });
   const { unusedCoupons, reload: reloadCoupons } = useUnusedCoupons();
   const ticket = useTicket(products.productsById);
 
@@ -76,7 +82,7 @@ export function MostradorPage() {
   });
 
   return (
-    <AppShell railFooter={<DaySummary salesCount={daySummary.salesCount} salesAmount={daySummary.salesAmount} />}>
+    <AppShell railFooter={<DaySummary isAvailable={daySummary.isAvailable} salesCount={daySummary.salesCount} salesAmount={daySummary.salesAmount} />}>
       <main className="work">
         <div className="work__header">
           <h1 className="screen-title">Mostrador</h1>

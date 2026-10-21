@@ -6,6 +6,7 @@ import { PanelHeader } from '../../components/ui/PanelHeader';
 import { SearchField } from '../../components/ui/SearchField';
 import { clientFullName, matchesClient, sortClients } from '../../domain/client';
 import { formatNumber, pluralize } from '../../domain/format';
+import { useIsAdmin } from '../../hooks/useAuth';
 import { useClients } from '../../hooks/useClients';
 import { PANEL_MODE, useEditPanel } from '../../hooks/useEditPanel';
 import { ClientForm } from './ClientForm';
@@ -39,11 +40,12 @@ function panelHeaderFor(panel) {
   return { title: 'Ficha de cliente', subtitle: 'Elegí uno de la lista o cargá uno nuevo' };
 }
 
-function IdlePanel({ onCreate }) {
+function IdlePanel({ canDelete, onCreate }) {
   return (
     <div className="side-column__body clients-idle">
       <p className="helper-text">
-        Tocá «Editar» en la lista para cambiar los datos de un cliente: nombre, DNI, teléfono, email o dirección. «Eliminar» está al lado y pide confirmación.
+        Tocá «Editar» en la lista para cambiar los datos de un cliente: nombre, DNI, teléfono, email o dirección.{' '}
+        {canDelete ? '«Eliminar» está al lado y pide confirmación.' : 'Borrar un cliente lo hace un administrador.'}
       </p>
       <button type="button" className="btn btn--ghost" onClick={onCreate}>
         <Icon name="plus" size={14} strokeWidth={2.6} />
@@ -54,6 +56,8 @@ function IdlePanel({ onCreate }) {
 }
 
 export function ClientesPage() {
+  // Only ADMIN deletes clients (ClientController); everyone else creates and edits.
+  const isAdmin = useIsAdmin();
   const book = useClients();
   const panel = useEditPanel({
     create: book.createClient,
@@ -107,7 +111,7 @@ export function ClientesPage() {
           onRetry={book.reload}
           selectedId={panel.editing?.idClientDTO}
           onEdit={panel.startEdit}
-          onDelete={panel.remove}
+          onDelete={isAdmin ? panel.remove : null}
           isBusy={panel.isBusy}
           emptyCopy={emptyCopyFor(query)}
         />
@@ -116,7 +120,7 @@ export function ClientesPage() {
       <aside className="side-column" aria-label={header.title}>
         <PanelHeader title={header.title} subtitle={header.subtitle} />
         {panel.mode === PANEL_MODE.IDLE ? (
-          <IdlePanel onCreate={panel.startCreate} />
+          <IdlePanel canDelete={isAdmin} onCreate={panel.startCreate} />
         ) : (
           <ClientForm
             key={panel.editing?.idClientDTO ?? 'new'}

@@ -1,4 +1,7 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { hasRole, rolesOf } from '../../domain/session';
+import { useAuth } from '../../hooks/useAuth';
+import { Icon } from '../ui/Icon';
 
 const NAV_ITEMS = [
   { to: '/mostrador', label: 'Mostrador', shortcut: 'F1' },
@@ -8,11 +11,53 @@ const NAV_ITEMS = [
   { to: '/ventas', label: 'Ventas', shortcut: 'F7' }
 ];
 
+// Only for ROLE_ADMIN. No F keys: these screens are not used with a customer waiting.
+const ADMIN_ITEMS = [
+  { to: '/usuarios', label: 'Usuarios' },
+  { to: '/roles', label: 'Roles' },
+  { to: '/permisos', label: 'Permisos' }
+];
+
 function navLinkClass({ isActive }) {
   return isActive ? 'nav-link is-current' : 'nav-link';
 }
 
+function NavItem({ item }) {
+  return (
+    <NavLink to={item.to} className={navLinkClass}>
+      {item.label} {item.shortcut && <kbd className="nav-link__kbd">{item.shortcut}</kbd>}
+    </NavLink>
+  );
+}
+
+function Account() {
+  const { session, logout } = useAuth();
+  const navigate = useNavigate();
+  const roles = rolesOf(session);
+
+  function handleLogout() {
+    logout();
+    navigate('/login', { replace: true });
+  }
+
+  return (
+    <div className="rail__account">
+      <p className="rail__account-name">
+        <Icon name="user" size={16} strokeWidth={2.4} />
+        <span>{session.username}</span>
+      </p>
+      {roles.length > 0 && <p className="rail__account-roles">{roles.join(' · ')}</p>}
+      <button type="button" className="link-btn rail__logout" onClick={handleLogout}>
+        Cerrar sesión
+      </button>
+    </div>
+  );
+}
+
 function Rail({ footer }) {
+  const { session } = useAuth();
+  const isAdmin = hasRole(session, 'ADMIN');
+
   return (
     <nav className="rail" aria-label="Secciones">
       <div>
@@ -21,12 +66,21 @@ function Rail({ footer }) {
       </div>
       <div className="rail__nav">
         {NAV_ITEMS.map((item) => (
-          <NavLink key={item.to} to={item.to} className={navLinkClass}>
-            {item.label} <kbd className="nav-link__kbd">{item.shortcut}</kbd>
-          </NavLink>
+          <NavItem key={item.to} item={item} />
         ))}
+        {isAdmin && (
+          <>
+            <p className="rail__group-label">Administración</p>
+            {ADMIN_ITEMS.map((item) => (
+              <NavItem key={item.to} item={item} />
+            ))}
+          </>
+        )}
       </div>
-      {footer && <div className="rail__footer">{footer}</div>}
+      <div className="rail__bottom">
+        {footer && <div className="rail__footer">{footer}</div>}
+        {session && <Account />}
+      </div>
     </nav>
   );
 }

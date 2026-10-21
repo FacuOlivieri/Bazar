@@ -8,6 +8,7 @@ import { Tabs } from '../../components/ui/Tabs';
 import { formatNumber, pluralize } from '../../domain/format';
 import { matchesProduct } from '../../domain/product';
 import { isLowStock, LOW_STOCK_QUANTITY } from '../../domain/stock';
+import { useIsAdmin } from '../../hooks/useAuth';
 import { PANEL_MODE, useEditPanel } from '../../hooks/useEditPanel';
 import { useProducts } from '../../hooks/useProducts';
 import { ProductForm } from './ProductForm';
@@ -28,10 +29,10 @@ const PANEL_MESSAGES = {
   removed: (product) => `«${product.name}» se eliminó del catálogo.`
 };
 
-function emptyCopyFor(tabKey, query) {
+function emptyCopyFor(tabKey, query, isAdmin) {
   if (query.trim()) return { title: `Nada coincide con «${query}»`, hint: 'Probá con menos palabras o buscá por la marca.' };
   if (tabKey === 'low') return { title: 'No hay productos para reponer', hint: `Todo el catálogo tiene ${LOW_STOCK_QUANTITY} unidades o más.` };
-  return { title: 'Todavía no hay productos', hint: 'Cargá el primero con «Nuevo producto».' };
+  return { title: 'Todavía no hay productos', hint: isAdmin ? 'Cargá el primero con «Nuevo producto».' : 'Los carga un administrador.' };
 }
 
 function panelHeaderFor(panel) {
@@ -41,6 +42,7 @@ function panelHeaderFor(panel) {
 }
 
 export function ProductosPage() {
+  const isAdmin = useIsAdmin();
   const catalog = useProducts();
   const panel = useEditPanel({
     create: catalog.createProduct,
@@ -71,10 +73,12 @@ export function ProductosPage() {
       <main className="work">
         <div className="work__header">
           <h1 className="screen-title">Productos y stock</h1>
-          <button type="button" className="btn btn--primary" onClick={panel.startCreate}>
-            <Icon name="plus" size={14} strokeWidth={2.6} />
-            Nuevo producto
-          </button>
+          {isAdmin && (
+            <button type="button" className="btn btn--primary" onClick={panel.startCreate}>
+              <Icon name="plus" size={14} strokeWidth={2.6} />
+              Nuevo producto
+            </button>
+          )}
         </div>
 
         <div className="tabs-row">
@@ -104,17 +108,17 @@ export function ProductosPage() {
           error={catalog.error}
           onRetry={catalog.reload}
           selectedId={panel.editing?.idProduct}
-          onEdit={panel.startEdit}
-          onDelete={panel.remove}
+          onEdit={isAdmin ? panel.startEdit : null}
+          onDelete={isAdmin ? panel.remove : null}
           isBusy={panel.isBusy}
-          emptyCopy={emptyCopyFor(tabKey, query)}
+          emptyCopy={emptyCopyFor(tabKey, query, isAdmin)}
         />
       </main>
 
       <aside className="side-column" aria-label={header.title}>
         <PanelHeader title={header.title} subtitle={header.subtitle} />
         {panel.mode === PANEL_MODE.IDLE ? (
-          <SupplierOrder lowStockProducts={lowStockProducts} onEdit={panel.startEdit} />
+          <SupplierOrder lowStockProducts={lowStockProducts} onEdit={isAdmin ? panel.startEdit : null} />
         ) : (
           <ProductForm
             key={panel.editing?.idProduct ?? 'new'}

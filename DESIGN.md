@@ -395,6 +395,24 @@ Tinta sobre papel, mayúsculas condensadas, sin redondeo; se sienten como rótul
 - **Desglose en el pie del ticket:** con cupón aplicado, arriba del total aparecen Subtotal y «Cupón CÓDIGO (N %)» con el monto descontado, en Barlow 14px `ink-muted` con cifras de tinta.
 - **Estado en la tabla:** «Disponible» es un bloque de tinta con texto blanco; «Usado» es un contorno de 2px `disabled-border` con texto `ink-faint`. Ninguno usa rojo.
 
+### Ingreso (login)
+- Pantalla sin riel: papel de fondo con un lomo kraft de 18px a la izquierda (12px arriba en ≤ 480px), la marca BAZAR estarcida a 56px y una sola hoja de 400px con filete de 3px y encabezado de tinta («INGRESAR» / «Gestión del local»).
+- Campos Usuario y Contraseña de 44px; la contraseña lleva un botón ícono (ojo en SVG) para mostrarla. «Entrar» es el botón primario a todo el ancho.
+- Error en `inline-error` de tinta; sesión vencida en `notice` de cartón teñido. Nada en rojo.
+
+### Riel: sesión y Administración
+- Para `ROLE_ADMIN`, debajo de las secciones aparece el rótulo «ADMINISTRACIÓN» (Barlow Condensed 12px, tracking 0.16em, `kraft-ink`) y los ítems Usuarios, Roles y Permisos, sin atajo F.
+- Al pie, debajo del resumen y separado por un filete de 2px: ícono de persona y username (Barlow Condensed 16px), los roles en mayúsculas a 13px y el enlace «Cerrar sesión».
+- En ≤ 800px solo queda «Cerrar sesión», en la fila de la marca.
+
+### Usuarios, Roles y Permisos
+- **Nombre en código** (`name-code`): Barlow Condensed 15px en mayúsculas con tracking 0.08em, para nombres de rol y permiso (VER_VENTAS). No usa estarcido: es un rótulo, no un código de caja.
+- **Etiqueta** (`name-tag`): contorno de 2px de tinta, Barlow Condensed 13px en mayúsculas, para listar roles o permisos dentro de una celda. No es el sello: no rota ni usa rojo.
+- **Estado de usuario** (`status-mark`): «Activo» es un bloque de tinta con texto blanco; Bloqueado, Deshabilitado, Cuenta vencida y Contraseña vencida son contorno de 2px de tinta.
+- **Insignia «Vos»** (`you-mark`): bloque de tinta chico junto al usuario con el que estás adentro.
+- **Lista de elección** (`check-list`): caja con borde de 2px de tinta y filas de 44px separadas por `rule-light`. Las filas marcadas van en cartón teñido. Arriba lleva el rótulo y el conteo «N elegidos»; vacía, muestra un recuadro punteado con enlace a la pantalla donde se crean.
+- **Borrado bloqueado:** si un registro no se puede borrar (tu usuario, un rol asignado, un permiso en uso), «Eliminar» explica el motivo en la misma fila con «Entendido» en lugar de pedir confirmación.
+
 ### Sello de stock (componente firma)
 La marca de cartón que dice la verdad del stock.
 - **Texto:** REPONER (stock entre 1 y 4) o SIN STOCK (stock 0). Con stock de 5 o más no hay sello.

@@ -1,3 +1,5 @@
+import { getToken, notifySessionExpired } from './session';
+
 const BASE_URL = '/api/v1';
 
 export class ApiError extends Error {
@@ -25,23 +27,41 @@ async function readErrorMessage(response) {
   return message;
 }
 
-async function request(path, { method = 'GET', body } = {}) {
+function buildHeaders(body, token) {
+  const headers = {};
+  if (body) headers['Content-Type'] = 'application/json';
+  if (token) headers.Authorization = `Bearer ${token}`;
+  return headers;
+}
+
+// `authenticated: false` is for /auth/login: no token is sent and a 401 there is a wrong password, not an expired session.
+export async function requestJson(url, { method = 'GET', body, authenticated = true } = {}) {
+  const token = authenticated ? getToken() : null;
   let response;
   try {
-    response = await fetch(BASE_URL + path, {
+    response = await fetch(url, {
       method,
-      headers: body ? { 'Content-Type': 'application/json' } : undefined,
+      headers: buildHeaders(body, token),
       body: body ? JSON.stringify(body) : undefined
     });
   } catch {
     throw new ApiError(0, 'No hay conexión con el servidor del bazar.');
   }
 
+  if (authenticated && response.status === 401) {
+    notifySessionExpired();
+    throw new ApiError(401, 'Tu sesión venció. Volvé a entrar.');
+  }
+  if (authenticated && response.status === 403) {
+    throw new ApiError(403, 'Tu usuario no tiene permiso para esta acción.');
+  }
   if (!response.ok) {
     throw new ApiError(response.status, await readErrorMessage(response));
   }
   return response.status === 204 ? null : response.json();
 }
+
+const request = (path, options) => requestJson(BASE_URL + path, options);
 
 export const http = {
   get: (path) => request(path),
