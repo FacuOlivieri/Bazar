@@ -1,0 +1,41 @@
+# Plantilla de nginx: al arrancar el contenedor, ${BACKEND_URL} se reemplaza por la variable de entorno.
+# Las variables propias de nginx ($uri, $host...) no se tocan porque no estan definidas en el entorno.
+server {
+    listen 80;
+    server_name _;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    # El front llama a /api/v1/... y /auth/login con rutas relativas (igual que con el proxy de Vite):
+    # nginx las reenvia al back, asi el navegador nunca hace un pedido a otro origen y no hace falta CORS
+    location /api/ {
+        proxy_pass ${BACKEND_URL};
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    location /auth/ {
+        proxy_pass ${BACKEND_URL};
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Los archivos de /assets llevan un hash en el nombre: se pueden cachear para siempre
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        try_files $uri =404;
+    }
+
+    # React Router: cualquier ruta del front (/mostrador, /login, /usuarios...) devuelve index.html.
+    # index.html no se cachea, asi cada deploy se ve enseguida
+    location / {
+        add_header Cache-Control "no-cache";
+        try_files $uri $uri/ /index.html;
+    }
+}
