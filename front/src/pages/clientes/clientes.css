@@ -1,0 +1,67 @@
+/* Filter sits on the same control rule as the Productos tabs row. */
+.clients-filter {
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: var(--rule-control);
+}
+
+.client-surname {
+  font-weight: 700;
+}
+
+.data-table .col-dni,
+.data-table .col-phone {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.data-table .col-email {
+  color: var(--color-ink-muted);
+  overflow-wrap: anywhere;
+}
+
+/* Field-level warning: ink, not red (red is reserved for stock urgency and COBRAR). */
+.field-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin-top: -8px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.field-hint svg {
+  flex: none;
+  margin-top: 1px;
+}
+
+.data-table .col-address {
+  color: var(--color-ink-muted);
+  overflow-wrap: anywhere;
+}
+
+/* Contact columns step aside on narrow screens; the form still shows everything. */
+@media (max-width: 1100px) {
+  .data-table .col-email,
+  .data-table .col-address {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .data-table .col-phone {
+    display: none;
+  }
+}
+
+.clients-idle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  padding-top: 24px;
+}
+
+.clients-idle .helper-text {
+  max-width: 34ch;
+}

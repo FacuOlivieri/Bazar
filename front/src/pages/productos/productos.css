@@ -1,0 +1,36 @@
+/* ---------- Supplier order ---------- */
+.supplier-order {
+  padding-top: 8px;
+}
+
+.supplier-order__brand {
+  padding: 14px 0 4px;
+  border-bottom: var(--rule-control);
+  font: 700 13px var(--font-condensed);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.supplier-order__line {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: var(--rule-dashed);
+}
+
+.supplier-order__name {
+  font-weight: 600;
+}
+
+.supplier-order__meta {
+  font-size: 13px;
+  color: var(--color-ink-muted);
+}
+
+.supplier-order__hint {
+  margin-top: 16px;
+  max-width: 34ch;
+}

@@ -1,0 +1,80 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "shoulders stencil text",
+        "files": [
+          ".impeccable/mocks/decision/assigned.html"
+        ],
+        "createdAt": "2026-10-15T19:11:49.797Z",
+        "reason": "Claude: decision sketch; Big Shoulders Stencil Text is declared in DESIGN.md, detector matched a partial name"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "permanent marker",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-15T19:11:49.877Z",
+        "reason": "Claude: decision-round sketch of an unchosen direction (spent hand), not part of the shipped build"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "archivo",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-15T19:11:49.949Z",
+        "reason": "Claude: decision-round sketch of an unchosen direction (spent hand), not part of the shipped build"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "marker",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-15T19:11:50.021Z",
+        "reason": "Claude: decision-round sketch of an unchosen direction (spent hand), not part of the shipped build"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/model-pick.html"
+        ],
+        "createdAt": "2026-10-15T19:11:50.169Z",
+        "reason": "Claude: decision-round sketch of an unchosen direction (spent hand), not part of the shipped build"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "18px",
+        "files": [
+          "src/pages/mostrador/mostrador.css"
+        ],
+        "createdAt": "2026-10-15T19:30:21.482Z",
+        "reason": "Claude: documented in DESIGN.md (figure 18px stepper count, search 18px on filter/mobile, display-total 40px on mobile)"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "40px",
+        "files": [
+          "src/pages/mostrador/mostrador.css"
+        ],
+        "createdAt": "2026-10-15T19:30:21.553Z",
+        "reason": "Claude: documented in DESIGN.md (figure 18px stepper count, search 18px on filter/mobile, display-total 40px on mobile)"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "18px",
+        "files": [
+          "src/styles/components.css"
+        ],
+        "createdAt": "2026-10-15T19:30:21.621Z",
+        "reason": "Claude: documented in DESIGN.md (figure 18px stepper count, search 18px on filter/mobile, display-total 40px on mobile)"
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+# Se instalan y se generan dentro de la imagen
+node_modules
+dist
+
+# Nada de esto hace falta para compilar el front
+.git
+.gitignore
+.claude
+.impeccable
+*.md
+*.local
+.env
+.env.*
+.DS_Store
+Dockerfile
+.dockerignore

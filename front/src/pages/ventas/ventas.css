@@ -1,0 +1,215 @@
+/* ---------- Filters: client picker, date range and quick links on one control rule ---------- */
+.sales-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 16px;
+  padding-bottom: 16px;
+  border-bottom: var(--rule-control);
+}
+
+.sales-filters__client {
+  position: relative;
+  flex: 1 1 260px;
+  min-width: 0;
+}
+
+/* The picker's options float over the table instead of pushing it down. */
+.sales-filters .client-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.sales-filters .client-combo__empty {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding-top: 4px;
+}
+
+/* Desde, Hasta and the quick links wrap as one block so the range never splits. */
+.sales-filters__dates {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 16px;
+}
+
+.sales-filters .form-field {
+  flex: 0 1 170px;
+}
+
+.sales-filters__actions {
+  display: flex;
+  align-items: center;
+  min-height: var(--touch-target);
+}
+
+.sales-result {
+  font-size: 15px;
+  color: var(--color-ink-muted);
+}
+
+.sales-result b {
+  color: var(--color-ink);
+}
+
+/* ---------- Table ---------- */
+.data-table .col-date,
+.data-table .col-units {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.data-table .col-units {
+  text-align: right;
+}
+
+.sales-table .coupon-code {
+  font-size: 15px;
+}
+
+/* ---------- Side column: idle summary ---------- */
+.sales-idle {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding-top: 24px;
+}
+
+.sales-idle .helper-text {
+  max-width: 34ch;
+  margin-bottom: 8px;
+}
+
+.sales-idle__count {
+  font: 700 18px var(--font-condensed);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.sales-idle__amount {
+  font: 800 40px/1 var(--font-stencil);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Side column: read-only ticket of a past sale ---------- */
+.sale-detail {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.sale-detail__lines {
+  flex: 1;
+  margin: 0;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  list-style: none;
+}
+
+.sale-line {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px 12px;
+  padding: 14px 0;
+  border-bottom: var(--rule-dashed);
+}
+
+.sale-line__info {
+  min-width: 0;
+}
+
+.sale-line__name {
+  font-weight: 600;
+}
+
+.sale-line__meta {
+  font-size: 13px;
+  color: var(--color-ink-muted);
+}
+
+.sale-line__subtotal {
+  text-align: right;
+}
+
+.sale-detail__footer {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px var(--space-panel-x) var(--space-panel-x);
+  border-top: var(--rule-structure);
+}
+
+.sale-detail__breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  font-size: 14px;
+  color: var(--color-ink-muted);
+}
+
+.sale-detail__breakdown div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sale-detail__breakdown dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.sale-detail__breakdown .coupon-code {
+  font-size: 14px;
+  color: var(--color-ink);
+}
+
+.sale-detail__total {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sale-detail__label {
+  font: 700 18px var(--font-condensed);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sale-detail__amount {
+  font: 800 48px/1 var(--font-stencil);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Narrow screens ---------- */
+@media (max-width: 1100px) {
+  .data-table .col-coupon {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .sale-detail__footer {
+    padding-left: var(--space-gutter);
+    padding-right: var(--space-gutter);
+  }
+}
+
+@media (max-width: 560px) {
+  .sales-filters .form-field {
+    flex: 1 1 140px;
+  }
+
+  .data-table .col-units {
+    display: none;
+  }
+}
