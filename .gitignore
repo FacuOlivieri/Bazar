@@ -1,0 +1,5 @@
+# Tiene las contraseñas de produccion
+docker-compose.yml
+
+# Notas personales del deploy
+Cambios para produccion.md
