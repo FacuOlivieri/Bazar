@@ -37,7 +37,7 @@ services:
     restart: unless-stopped
 
   frontend:
-    build: "../front bazar"
+    build: ./front
     # Unico puerto publicado: db y backend solo se ven dentro de la red de Docker
     ports:
       - "80:80"
