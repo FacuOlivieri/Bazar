@@ -29,9 +29,8 @@ services:
       DB_PASSWORD: b5e56bb7b34837508eb478fd
       PRIVATE_SEC_KEY: 832b19a2a019d22e2f0348611fe8ed3d632636cdceabe448850b9ad1d1e19de6
       USER_SEC: BAZAR-SEC
-      # Admin que se crea solo si la base no tiene usuarios (DataSeeder)
       ADMIN_USERNAME: admin
-      ADMIN_PASSWORD: 22be84324c71a634
+      ADMIN_PASSWORD: admin
     depends_on:
       db:
         condition: service_healthy
