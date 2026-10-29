@@ -1,0 +1,29 @@
+services:
+  bazarv1:
+    build: BazarV1
+    mem_limit: 512m
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:mysql://bazar_db:3306/bazar_db_docker?allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true&useSSL=false
+      DB_USER: root
+      DB_PASSWORD: 1234
+      USER_SEC: BAZAR-SEC
+      PRIVATE_SEC_KEY: 3bbed6c0789e25af068d2aa440c4b697c68ee9a1f59ace3daf29cffcdaa63c87
+    restart: always
+    depends_on:
+      bazar_db:
+        condition: service_healthy
+  bazar_db:
+    image: mysql:8.0.33
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_PASSWORD: 1234
+      MYSQL_DATABASE: bazar_db_docker
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10
